@@ -20,7 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-namespace DynamicRestClient.IO.Caching
+namespace DynamicRestClient.IO.Compression
 {
     /// <summary>
     /// Represents a utility that compresses bytes.

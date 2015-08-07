@@ -25,6 +25,7 @@ namespace DynamicRestClient.IO.Caching
     using System;
     using System.Net;
     using System.Text;
+    using Compression;
 
     /// <summary>
     /// Static factories for cached <see cref="IResponse"/>s.

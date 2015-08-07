@@ -106,9 +106,10 @@
     <Compile Include="Caching\NullCache.cs" />
     <Compile Include="Caching\RelativeCacheAttribute.cs" />
     <Compile Include="Caching\SlidingCacheAttribute.cs" />
-    <Compile Include="IO\Caching\DeflateCompressor.cs" />
-    <Compile Include="IO\Caching\GzipCompressor.cs" />
-    <Compile Include="IO\Caching\StreamingCompressor.cs" />
+    <Compile Include="IO\Compression\DeflateCompressor.cs" />
+    <Compile Include="IO\Compression\GzipCompressor.cs" />
+    <Compile Include="IO\Compression\ICompressor.cs" />
+    <Compile Include="IO\Compression\StreamingCompressor.cs" />
     <Compile Include="TimeScale.cs" />
     <Compile Include="IO\AbstractRequest.cs" />
     <Compile Include="IO\Authentication\AuthenticatedRequestExecutor.cs" />
@@ -121,7 +122,6 @@
     <Compile Include="IO\Caching\ExpirationPolicyFactory.cs" />
     <Compile Include="IO\Caching\ICacheKeyProvider.cs" />
     <Compile Include="IO\Caching\ICachingPolicy.cs" />
-    <Compile Include="IO\Caching\ICompressor.cs" />
     <Compile Include="IO\Caching\IExpirationPolicy.cs" />
     <Compile Include="IO\IRequest.cs" />
     <Compile Include="IO\IRequestBody.cs" />
