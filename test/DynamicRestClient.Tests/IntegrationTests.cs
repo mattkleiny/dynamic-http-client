@@ -53,39 +53,6 @@ namespace DynamicRestClient.Tests
         /// </summary>
         private readonly ITestClient client = Factory.Build<ITestClient>();
 
-        [Fact, Category(Categories.Slow)]
-        public void GetPosts_Succeeds()
-        {
-            var posts = this.client.GetPosts();
-
-            Assert.NotNull(posts);
-            Assert.True(posts.Any());
-        }
-
-        [Fact, Category(Categories.Slow)]
-        public void GetPost_Succeeds()
-        {
-            var post = this.client.GetPost(1);
-
-            Assert.NotNull(post);
-        }
-
-        [Fact, Category(Categories.Slow)]
-        public async Task CreatePost_Succeeds()
-        {
-            await this.client.CreatePost(new Post
-            {
-                Title = "Test",
-                Body = "Test test test"
-            });
-        }
-
-        [Fact, Category(Categories.Slow)]
-        public async Task DeletePost_Succeeds()
-        {
-            await this.client.DeletePost(66);
-        }
-
         /// <summary>
         /// A simple test client for http://jsonplaceholder.typicode.com/.
         /// </summary>
@@ -93,17 +60,29 @@ namespace DynamicRestClient.Tests
         [Deserializer(typeof (NewtonsoftDeserializer))]
         public interface ITestClient
         {
-            [Post("/posts")]
-            Task CreatePost([Body] Post post);
-
             [Get("/posts")]
             Post[] GetPosts();
 
             [Get("/posts/{id}")]
             Post GetPost(int id);
 
+            [Post("/posts")]
+            void CreatePost([Body] Post post);
+
             [Delete("/posts/{id}")]
-            Task DeletePost(int id);
+            void DeletePost(int id);
+
+            [Get("/posts")]
+            Task<Post[]> GetPostsAsync();
+
+            [Get("/posts/{id}")]
+            Task<Post> GetPostAsync(int id);
+
+            [Post("/posts")]
+            Task CreatePostAsync([Body] Post post);
+
+            [Delete("/posts/{id}")]
+            Task DeletePostAsync(int id);
         }
 
         /// <summary>
@@ -124,5 +103,79 @@ namespace DynamicRestClient.Tests
             [DataMember(Name = "body")]
             public string Body { get; set; }
         }
+
+        #region Blocking Methods
+
+        [Fact, Category(Categories.Slow)]
+        public void GetPosts_Succeeds()
+        {
+            var posts = this.client.GetPosts();
+
+            Assert.NotNull(posts);
+            Assert.True(posts.Any());
+        }
+
+        [Fact, Category(Categories.Slow)]
+        public void GetPost_Succeeds()
+        {
+            var post = this.client.GetPost(1);
+
+            Assert.NotNull(post);
+        }
+
+        [Fact, Category(Categories.Slow)]
+        public void CreatePost_Succeeds()
+        {
+            this.client.CreatePost(new Post
+            {
+                Title = "Test",
+                Body = "Test test test"
+            });
+        }
+
+        [Fact, Category(Categories.Slow)]
+        public void DeletePost_Succeeds()
+        {
+            this.client.DeletePost(66);
+        }
+
+        #endregion
+
+        #region Async Methods
+
+        [Fact, Category(Categories.Slow)]
+        public async Task GetPostsAsync_Succeeds()
+        {
+            var posts = await this.client.GetPostsAsync();
+
+            Assert.NotNull(posts);
+            Assert.True(posts.Any());
+        }
+
+        [Fact, Category(Categories.Slow)]
+        public async Task GetPostAsync_Succeeds()
+        {
+            var post = await this.client.GetPostAsync(1);
+
+            Assert.NotNull(post);
+        }
+
+        [Fact, Category(Categories.Slow)]
+        public async Task CreatePostAsync_Succeeds()
+        {
+            await this.client.CreatePostAsync(new Post
+            {
+                Title = "Test",
+                Body = "Test test test"
+            });
+        }
+
+        [Fact, Category(Categories.Slow)]
+        public async Task DeletePostAsync_Succeeds()
+        {
+            await this.client.DeletePostAsync(66);
+        }
+
+        #endregion
     }
 }
