@@ -21,7 +21,5 @@
 // THE SOFTWARE.
 
 using System.Reflection;
-using System.Runtime.CompilerServices;
 
-[assembly: AssemblyTitle("DynamicRestClient")]
-[assembly: InternalsVisibleTo("DynamicRestClient.Tests")]
+[assembly: AssemblyTitle("DynamicRestClient.Tests")]

@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "(Solution Items)", "(Soluti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicRestClient", "src\DynamicRestClient\DynamicRestClient.csproj", "{9239DE74-5980-4FA4-87FA-116C9B34B91F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicRestClient.Tests", "DynamicRestClient.Tests\DynamicRestClient.Tests.csproj", "{125E63A7-0635-4225-B441-B3A3C9A73556}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +26,10 @@ Global
 		{9239DE74-5980-4FA4-87FA-116C9B34B91F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9239DE74-5980-4FA4-87FA-116C9B34B91F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9239DE74-5980-4FA4-87FA-116C9B34B91F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{125E63A7-0635-4225-B441-B3A3C9A73556}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{125E63A7-0635-4225-B441-B3A3C9A73556}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{125E63A7-0635-4225-B441-B3A3C9A73556}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{125E63A7-0635-4225-B441-B3A3C9A73556}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
