@@ -31,9 +31,7 @@ namespace DynamicRestClient.Tests
     using Attributes.Methods;
     using Caching;
     using DynamicRestClient.IO;
-    using DynamicRestClient.IO.Caching;
     using DynamicRestClient.IO.Serialization;
-    using DynamicRestClient.Utilities;
     using Xunit;
 
     /// <summary>
@@ -51,17 +49,41 @@ namespace DynamicRestClient.Tests
         };
 
         /// <summary>
-        /// A <see cref="IJsonPlaceholderClient"/> for our tests.
+        /// A <see cref="ITestClient"/> for our tests.
         /// </summary>
-        private readonly IJsonPlaceholderClient client = Factory.Build<IJsonPlaceholderClient>();
+        private readonly ITestClient client = Factory.Build<ITestClient>();
 
         [Fact, Category(Categories.Slow)]
-        public async Task GetPosts_Able_To_Request_And_Retrieve_Post_Information()
+        public void GetPosts_Succeeds()
         {
-            var posts = await this.client.GetPosts();
+            var posts = this.client.GetPosts();
 
             Assert.NotNull(posts);
             Assert.True(posts.Any());
+        }
+
+        [Fact, Category(Categories.Slow)]
+        public void GetPost_Succeeds()
+        {
+            var post = this.client.GetPost(1);
+
+            Assert.NotNull(post);
+        }
+
+        [Fact, Category(Categories.Slow)]
+        public async Task CreatePost_Succeeds()
+        {
+            await this.client.CreatePost(new Post
+            {
+                Title = "Test",
+                Body = "Test test test"
+            });
+        }
+
+        [Fact, Category(Categories.Slow)]
+        public async Task DeletePost_Succeeds()
+        {
+            await this.client.DeletePost(66);
         }
 
         /// <summary>
@@ -69,11 +91,19 @@ namespace DynamicRestClient.Tests
         /// </summary>
         [Serializer(typeof (NewtonsoftSerializer))]
         [Deserializer(typeof (NewtonsoftDeserializer))]
-        public interface IJsonPlaceholderClient
+        public interface ITestClient
         {
+            [Post("/posts")]
+            Task CreatePost([Body] Post post);
+
             [Get("/posts")]
-            [RelativeCache(60, TimeScale.Seconds, Representation = CachedRepresentation.Compressed)]
-            Task<Post[]> GetPosts();
+            Post[] GetPosts();
+
+            [Get("/posts/{id}")]
+            Post GetPost(int id);
+
+            [Delete("/posts/{id}")]
+            Task DeletePost(int id);
         }
 
         /// <summary>
