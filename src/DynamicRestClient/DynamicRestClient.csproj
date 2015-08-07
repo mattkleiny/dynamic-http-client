@@ -110,6 +110,7 @@
     <Compile Include="IO\Compression\GzipCompressor.cs" />
     <Compile Include="IO\Compression\ICompressor.cs" />
     <Compile Include="IO\Compression\StreamingCompressor.cs" />
+    <Compile Include="IO\HttpClientRequestExecutor.cs" />
     <Compile Include="Proxy\CastleLoggerAdapter.cs" />
     <Compile Include="TimeScale.cs" />
     <Compile Include="IO\AbstractRequest.cs" />
