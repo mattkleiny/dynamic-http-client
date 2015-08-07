@@ -31,6 +31,8 @@ namespace DynamicRestClient
     {
         public static TimeSpan BuildTimeSpan(int interval, TimeScale timeScale)
         {
+            Check.That(interval > 0, "A positive interval was expected.");
+
             throw new NotImplementedException();
         }
     }

@@ -44,9 +44,9 @@ namespace DynamicRestClient.IO
         /// </summary>
         public static string SubstituteUrlParameters(string url, IEnumerable<KeyValuePair<string, string>> segments, Func<string, string> urlEncodeDelegate)
         {
-            Check.NotNullOrEmpty(url, "A valid url was expected.");
-            Check.NotNull(segments, "A valid segment sequence was expected.");
-            Check.NotNull(urlEncodeDelegate, "A valid url encoding delegate was expected.");
+            Check.NotNullOrEmpty(url, nameof(url));
+            Check.NotNull(segments, nameof(segments));
+            Check.NotNull(urlEncodeDelegate, nameof(urlEncodeDelegate));
 
             var builder = new StringBuilder(url);
 

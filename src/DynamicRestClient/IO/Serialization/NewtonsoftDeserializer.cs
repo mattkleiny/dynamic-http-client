@@ -35,8 +35,8 @@ namespace DynamicRestClient.IO.Serialization
 
         public object Deserialize(Type type, TextReader reader)
         {
-            Check.NotNull(type, "A valid type was expected.");
-            Check.NotNull(reader, "A valid text reader was expected.");
+            Check.NotNull(type, nameof(type));
+            Check.NotNull(reader, nameof(reader));
 
             return this.serializer.Deserialize(reader, type);
         }

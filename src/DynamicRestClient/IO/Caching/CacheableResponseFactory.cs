@@ -41,7 +41,7 @@ namespace DynamicRestClient.IO.Caching
         /// </summary>
         public static IResponse BuildCachedResponse(CachedRepresentation representation, IResponse response)
         {
-            Check.NotNull(response, "A valid response was expected.");
+            Check.NotNull(response, nameof(response));
 
             switch (representation)
             {
@@ -107,8 +107,8 @@ namespace DynamicRestClient.IO.Caching
 
             public CompressedCacheableResponse(IResponse response, ICompressor compressor)
             {
-                Check.NotNull(response, "A valid response was expected.");
-                Check.NotNull(compressor, "A valid compressor was expected.");
+                Check.NotNull(response, nameof(response));
+                Check.NotNull(compressor, nameof(compressor));
 
                 this.compressor = compressor;
                 this.contentEncoding = response.ContentEncoding;

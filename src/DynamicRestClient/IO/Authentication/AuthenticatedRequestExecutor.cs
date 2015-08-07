@@ -36,10 +36,8 @@ namespace DynamicRestClient.IO.Authentication
         /// <param name="policy">The <see cref="IAuthenticationPolicy"/> to use.</param>
         public AuthenticatedRequestExecutor(IRequestExecutor executor, IAuthenticationPolicy policy)
         {
-            Check.NotNull(executor, "A valid executor was expected.");
-            Check.NotNull(policy, "A valid authentication policy was expected.");
-            Check.NotNull(executor, "A valid request executor was expected.");
-            Check.NotNull(policy, "A valid authentication policy was expected.");
+            Check.NotNull(executor, nameof(executor));
+            Check.NotNull(policy, nameof(policy));
 
             this.executor = executor;
             this.policy = policy;
@@ -56,7 +54,7 @@ namespace DynamicRestClient.IO.Authentication
 
         public IResponse ExecuteRequest(IRequest request)
         {
-            Check.NotNull(request, "A valid request was expected.");
+            Check.NotNull(request, nameof(request));
 
             this.policy.AttachAuthentication(request);
 
@@ -65,7 +63,7 @@ namespace DynamicRestClient.IO.Authentication
 
         public Task<IResponse> ExecuteRequestAsync(IRequest request)
         {
-            Check.NotNull(request, "A valid request was expected.");
+            Check.NotNull(request, nameof(request));
 
             this.policy.AttachAuthentication(request);
 

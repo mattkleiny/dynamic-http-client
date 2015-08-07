@@ -34,8 +34,6 @@ namespace DynamicRestClient.Caching
 
         public SlidingCacheAttribute(int interval, TimeScale scale)
         {
-            Check.That(interval > 0, "A positive interval was expected.");
-
             this.interval = TimeScaleHelpers.BuildTimeSpan(interval, scale);
         }
 

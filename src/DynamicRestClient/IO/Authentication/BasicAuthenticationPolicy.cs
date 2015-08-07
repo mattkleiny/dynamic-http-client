@@ -36,8 +36,8 @@ namespace DynamicRestClient.IO.Authentication
         /// <param name="password">The password to use for authenticating.</param>
         public BasicAuthenticationPolicy(string username, string password)
         {
-            Check.NotNullOrEmpty(username, "A valid username was expected.");
-            Check.NotNullOrEmpty(password, "A valid password was expected.");
+            Check.NotNullOrEmpty(username, nameof(username));
+            Check.NotNullOrEmpty(password, nameof(password));
 
             this.encodedCredentials = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{username}:{password}"));
         }

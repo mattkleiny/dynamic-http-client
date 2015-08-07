@@ -40,7 +40,7 @@ namespace DynamicRestClient.Metadata
         /// </summary>
         public static void InspectType(Type type)
         {
-            Check.NotNull(type, "A valid type was expected.");
+            Check.NotNull(type, nameof(type));
 
             if (!type.IsInterface)
             {
@@ -68,7 +68,7 @@ namespace DynamicRestClient.Metadata
         /// </summary>
         public static void InspectMethod(MethodInfo method)
         {
-            Check.NotNull(method, "A valid method was expected.");
+            Check.NotNull(method, nameof(method));
 
             var methodAttribute = method.GetCustomAttribute<MethodAttribute>();
 
@@ -89,7 +89,7 @@ namespace DynamicRestClient.Metadata
         /// <exception cref="InvalidMetadataException">If the method metadata is invalid.</exception>
         public static RequestMetadata CreateMetadata(MethodInfo method)
         {
-            Check.NotNull(method, "A valid method was expected.");
+            Check.NotNull(method, nameof(method));
 
             InspectMethod(method);
 
@@ -118,7 +118,7 @@ namespace DynamicRestClient.Metadata
         /// </summary>
         internal static Type GetReturnType(MethodInfo method)
         {
-            Check.NotNull(method, "A valid method was expected");
+            Check.NotNull(method, nameof(method));
 
             if (typeof (Task).IsAssignableFrom(method.ReturnType))
             {
@@ -200,7 +200,7 @@ namespace DynamicRestClient.Metadata
         /// </summary>
         private static IEnumerable<IMetadataAware> FindMetadataAwareAttributes(MethodBase method)
         {
-            Check.NotNull(method, "A valid method was expected.");
+            Check.NotNull(method, nameof(method));
 
             foreach (var attribute in method.GetParameters().SelectMany(p => p.GetCustomAttributes()).OfType<IMetadataAware>())
             {

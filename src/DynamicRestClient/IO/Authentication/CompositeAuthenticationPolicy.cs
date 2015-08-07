@@ -41,14 +41,14 @@ namespace DynamicRestClient.IO.Authentication
         /// <param name="policies">The <see cref="IAuthenticationPolicy"/> to compose.</param>
         public CompositeAuthenticationPolicy(IEnumerable<IAuthenticationPolicy> policies)
         {
-            Check.NotNull(policies, "A valid policy sequence was expected.");
+            Check.NotNull(policies, nameof(policies));
 
             this.policies = policies;
         }
 
         public void AttachAuthentication(IRequestBuilder builder)
         {
-            Check.NotNull(builder, "A valid builder was expected.");
+            Check.NotNull(builder, nameof(builder));
 
             foreach (var policy in this.policies)
             {
@@ -58,7 +58,7 @@ namespace DynamicRestClient.IO.Authentication
 
         public void AttachAuthentication(IRequest request)
         {
-            Check.NotNull(request, "A valid request was expected.");
+            Check.NotNull(request, nameof(request));
 
             foreach (var policy in this.policies)
             {

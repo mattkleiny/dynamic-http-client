@@ -50,9 +50,9 @@ namespace DynamicRestClient.IO
         /// <param name="serializer">The <see cref="ISerializer"/> to use.</param>
         public SerializedBody(Type type, object body, ISerializer serializer)
         {
-            Check.NotNull(type, "A valid body type was expected.");
-            Check.NotNull(body, "A valid body object was expected.");
-            Check.NotNull(serializer, "A valid serializer was expected.");
+            Check.NotNull(type, nameof(type));
+            Check.NotNull(body, nameof(body));
+            Check.NotNull(serializer, nameof(serializer));
 
             Type = type;
             Body = body;

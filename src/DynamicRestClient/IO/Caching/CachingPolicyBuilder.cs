@@ -66,7 +66,7 @@ namespace DynamicRestClient.IO.Caching
 
             public string EvaluateCacheKey(IRequest request)
             {
-                Check.NotNull(request, "A valid request was expected.");
+                Check.NotNull(request, nameof(request));
 
                 if (request is ICacheKeyProvider)
                 {
@@ -78,7 +78,7 @@ namespace DynamicRestClient.IO.Caching
 
             public bool ShouldCache(IResponse response)
             {
-                Check.NotNull(response, "A valid response was expected.");
+                Check.NotNull(response, nameof(response));
 
                 // don't cache items if they aren't found
                 return response.StatusCode != HttpStatusCode.NotFound;
@@ -86,14 +86,14 @@ namespace DynamicRestClient.IO.Caching
 
             public IResponse GetCacheableResponse(IResponse response)
             {
-                Check.NotNull(response, "A valid response was expected.");
+                Check.NotNull(response, nameof(response));
 
                 return CacheableResponseFactory.BuildCachedResponse(this.cachedRepresentation, response);
             }
 
             public CacheSettings GetCacheSettings(IRequest request)
             {
-                Check.NotNull(request, "A valid request was expected.");
+                Check.NotNull(request, nameof(request));
 
                 return this.expirationPolicy.BuildCacheSettings(request);
             }

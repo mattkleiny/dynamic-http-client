@@ -67,9 +67,9 @@ namespace DynamicRestClient.Proxy
         /// <param name="scheduler">The <see cref="TaskScheduler"/> to use.</param>
         public RestClientInterceptor(IRequestExecutor executor, ICache responseCache, TaskScheduler scheduler)
         {
-            Check.NotNull(executor, "A valid executor was expected.");
-            Check.NotNull(responseCache, "A valid response cache was expected.");
-            Check.NotNull(scheduler, "A valid scheduler was expected.");
+            Check.NotNull(executor, nameof(executor));
+            Check.NotNull(responseCache, nameof(responseCache));
+            Check.NotNull(scheduler, nameof(scheduler));
 
             this.executor = executor;
             this.responseCache = responseCache;

@@ -64,7 +64,7 @@ namespace DynamicRestClient.Proxy
 
             public CastleLoggerAdapter(ILog log)
             {
-                Check.NotNull(log, "A valid log was expected.");
+                Check.NotNull(log, nameof(log));
 
                 this.log = log;
             }

@@ -32,7 +32,7 @@ namespace DynamicRestClient.Attributes
     {
         public SegmentAttribute(string name)
         {
-            Check.NotNullOrEmpty(name, "A valid name was expected.");
+            Check.NotNullOrEmpty(name, nameof(name));
 
             Name = name;
         }

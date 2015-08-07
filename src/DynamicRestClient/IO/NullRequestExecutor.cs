@@ -38,7 +38,7 @@ namespace DynamicRestClient.IO
 
         public IResponse ExecuteRequest(IRequest request)
         {
-            Check.NotNull(request, "A valid request was expected.");
+            Check.NotNull(request, nameof(request));
 
             return new NullResponse(request.Url);
         }

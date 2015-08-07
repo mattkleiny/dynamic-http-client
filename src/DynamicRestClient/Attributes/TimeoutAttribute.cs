@@ -34,8 +34,6 @@ namespace DynamicRestClient.Attributes
 
         public TimeoutAttribute(int interval, TimeScale scale)
         {
-            Check.That(interval > 0, "A positive interval was expected.");
-
             this.timeout = TimeScaleHelpers.BuildTimeSpan(interval, scale);
         }
 

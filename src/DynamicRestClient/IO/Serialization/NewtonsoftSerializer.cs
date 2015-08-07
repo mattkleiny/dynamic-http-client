@@ -34,14 +34,11 @@ namespace DynamicRestClient.IO.Serialization
     {
         private readonly JsonSerializer serializer = JsonSerializer.CreateDefault(SerializationConstants.DefaultSerializerSettings);
 
-        public string ContentType
-        {
-            get { return "application/json"; }
-        }
+        public string ContentType => "application/json";
 
         public string Serialize(Type type, object content)
         {
-            Check.NotNull(content, "Valid content was expected.");
+            Check.NotNull(content, nameof(content));
 
             var builder = new StringBuilder();
 
