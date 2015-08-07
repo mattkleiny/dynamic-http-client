@@ -1,4 +1,4 @@
-﻿// The MIT License (MIT)
+// The MIT License (MIT)
 // 
 // Copyright (C) 2015, Matthew Kleinschafer.
 // 
@@ -20,6 +20,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Reflection;
-
-[assembly: AssemblyTitle("DynamicRestClient")]
+namespace DynamicRestClient
+{
+    /// <summary>
+    /// An enumeration of the HTTP request methods supported by the RestClient implementation.
+    /// </summary>
+    public enum RestMethod
+    {
+        Get,
+        Post,
+        Put,
+        Delete,
+        Head,
+        Options,
+        Patch
+    }
+}

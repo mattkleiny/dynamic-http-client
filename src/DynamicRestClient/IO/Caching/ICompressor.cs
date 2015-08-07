@@ -20,6 +20,21 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Reflection;
+namespace DynamicRestClient.IO.Caching
+{
+    /// <summary>
+    /// Represents a utility that compresses bytes.
+    /// </summary>
+    public interface ICompressor
+    {
+        /// <summary>
+        /// Compresses bytes.
+        /// </summary>
+        byte[] Compress(byte[] rawBytes);
 
-[assembly: AssemblyTitle("DynamicRestClient")]
+        /// <summary>
+        /// Decompresses bytes.
+        /// </summary>
+        byte[] Decompress(byte[] compressedBytes);
+    }
+}

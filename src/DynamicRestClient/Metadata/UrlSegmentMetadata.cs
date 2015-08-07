@@ -1,4 +1,4 @@
-﻿// The MIT License (MIT)
+// The MIT License (MIT)
 // 
 // Copyright (C) 2015, Matthew Kleinschafer.
 // 
@@ -20,6 +20,24 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Reflection;
+namespace DynamicRestClient.Metadata
+{
+    using System.Diagnostics;
 
-[assembly: AssemblyTitle("DynamicRestClient")]
+    /// <summary>
+    /// Encapsulates the metadata for a URL segment.
+    /// </summary>
+    [DebuggerDisplay("{Index}: {Name}")]
+    public sealed class UrlSegmentMetadata
+    {
+        /// <summary>
+        /// The index of the segment in the source method.
+        /// </summary>
+        public int Index { get; set; }
+
+        /// <summary>
+        /// The name of the segment.
+        /// </summary>
+        public string Name { get; set; }
+    }
+}

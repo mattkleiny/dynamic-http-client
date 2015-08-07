@@ -1,4 +1,4 @@
-﻿// The MIT License (MIT)
+// The MIT License (MIT)
 // 
 // Copyright (C) 2015, Matthew Kleinschafer.
 // 
@@ -20,6 +20,25 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Reflection;
+namespace DynamicRestClient.Metadata
+{
+    using System;
+    using System.Diagnostics;
 
-[assembly: AssemblyTitle("DynamicRestClient")]
+    /// <summary>
+    /// Encapsulates the metadata for a request body.
+    /// </summary>
+    [DebuggerDisplay("{Index}: {Type}")]
+    public sealed class RequestBodyMetadata
+    {
+        /// <summary>
+        /// The index of the body in the source method.
+        /// </summary>
+        public int Index { get; set; }
+
+        /// <summary>
+        /// The type of the body.
+        /// </summary>
+        public Type Type { get; set; }
+    }
+}

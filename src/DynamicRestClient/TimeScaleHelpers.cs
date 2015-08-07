@@ -20,6 +20,18 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Reflection;
+namespace DynamicRestClient
+{
+    using System;
 
-[assembly: AssemblyTitle("DynamicRestClient")]
+    /// <summary>
+    /// Static utilities for computing <see cref="TimeSpan"/>s from <see cref="TimeScale"/>s.
+    /// </summary>
+    internal static class TimeScaleHelpers
+    {
+        public static TimeSpan BuildTimeSpan(int interval, TimeScale timeScale)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}

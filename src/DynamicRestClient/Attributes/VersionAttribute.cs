@@ -1,4 +1,4 @@
-﻿// The MIT License (MIT)
+// The MIT License (MIT)
 // 
 // Copyright (C) 2015, Matthew Kleinschafer.
 // 
@@ -20,6 +20,26 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Reflection;
+namespace DynamicRestClient.Attributes
+{
+    using System;
+    using Metadata;
 
-[assembly: AssemblyTitle("DynamicRestClient")]
+    /// <summary>
+    /// A <see cref="Attribute"/> which denotes the version of a client.
+    /// </summary>
+    public sealed class VersionAttribute : Attribute, IMetadataAware
+    {
+        private readonly Version version;
+
+        public VersionAttribute(int major, int minor, int revision)
+        {
+            this.version = new Version(major, minor, revision);
+        }
+
+        public void OnAttachMetadata(RequestMetadata metadata)
+        {
+            metadata.Headers.Add("Version", this.version.ToString());
+        }
+    }
+}

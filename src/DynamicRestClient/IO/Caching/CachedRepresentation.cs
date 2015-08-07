@@ -1,4 +1,4 @@
-﻿// The MIT License (MIT)
+// The MIT License (MIT)
 // 
 // Copyright (C) 2015, Matthew Kleinschafer.
 // 
@@ -20,6 +20,21 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Reflection;
+namespace DynamicRestClient.IO.Caching
+{
+    /// <summary>
+    /// The desired representation type for the resultant cached entries.
+    /// </summary>
+    public enum CachedRepresentation
+    {
+        /// <summary>
+        /// An unchanged <see cref="IResponse"/> representation.
+        /// </summary>
+        Normal,
 
-[assembly: AssemblyTitle("DynamicRestClient")]
+        /// <summary>
+        /// A compressed <see cref="IResponse"/> with only content data.
+        /// </summary>
+        Compressed
+    }
+}

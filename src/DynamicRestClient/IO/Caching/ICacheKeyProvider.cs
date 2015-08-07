@@ -1,4 +1,4 @@
-﻿// The MIT License (MIT)
+// The MIT License (MIT)
 // 
 // Copyright (C) 2015, Matthew Kleinschafer.
 // 
@@ -20,6 +20,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Reflection;
-
-[assembly: AssemblyTitle("DynamicRestClient")]
+namespace DynamicRestClient.IO.Caching
+{
+    /// <summary>
+    /// A custom provider for cache key information.
+    /// </summary>
+    public interface ICacheKeyProvider
+    {
+        /// <summary>
+        /// The relevant cache key.
+        /// </summary>
+        string CacheKey { get; }
+    }
+}

@@ -1,4 +1,4 @@
-﻿// The MIT License (MIT)
+// The MIT License (MIT)
 // 
 // Copyright (C) 2015, Matthew Kleinschafer.
 // 
@@ -20,6 +20,21 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Reflection;
+namespace DynamicRestClient.IO.Authentication
+{
+    /// <summary>
+    /// An authentication policy for the <see cref="AuthenticatedRequestExecutor"/>.
+    /// </summary>
+    public interface IAuthenticationPolicy
+    {
+        /// <summary>
+        /// Attaches authentication to the given <see cref="IRequestBuilder"/>.
+        /// </summary>
+        void AttachAuthentication(IRequestBuilder builder);
 
-[assembly: AssemblyTitle("DynamicRestClient")]
+        /// <summary>
+        /// Attaches authentication to the given <see cref="IRequest"/>.
+        /// </summary>
+        void AttachAuthentication(IRequest request);
+    }
+}

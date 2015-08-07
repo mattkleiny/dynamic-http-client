@@ -20,6 +20,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Reflection;
+namespace DynamicRestClient.Attributes
+{
+    using System;
 
-[assembly: AssemblyTitle("DynamicRestClient")]
+    /// <summary>
+    /// Denotes the given parameter should be serialized into the message body.
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Parameter)]
+    public sealed class BodyAttribute : ParameterAttribute
+    {
+    }
+}

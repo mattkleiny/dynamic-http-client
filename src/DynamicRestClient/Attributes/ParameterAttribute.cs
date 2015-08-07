@@ -20,6 +20,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Reflection;
+namespace DynamicRestClient.Attributes
+{
+    using System;
 
-[assembly: AssemblyTitle("DynamicRestClient")]
+    /// <summary>
+    /// Base class for any <see cref="Attribute"/> which associates with a parameter.
+    /// </summary>
+    public abstract class ParameterAttribute : Attribute
+    {
+    }
+}

@@ -20,6 +20,23 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Reflection;
+namespace DynamicRestClient.IO.Serialization
+{
+    using System;
 
-[assembly: AssemblyTitle("DynamicRestClient")]
+    /// <summary>
+    /// Represents a utility that serializes objects from text.
+    /// </summary>
+    public interface ISerializer
+    {
+        /// <summary>
+        /// The content type/mime type of the resultant serialized format.
+        /// </summary>
+        string ContentType { get; }
+
+        /// <summary>
+        /// Serializes an object of the given type to text.
+        /// </summary>
+        string Serialize(Type type, object content);
+    }
+}

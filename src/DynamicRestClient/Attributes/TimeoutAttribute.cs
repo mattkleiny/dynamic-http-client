@@ -20,6 +20,28 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Reflection;
+namespace DynamicRestClient.Attributes
+{
+    using System;
+    using Metadata;
 
-[assembly: AssemblyTitle("DynamicRestClient")]
+    /// <summary>
+    /// A <see cref="Attribute"/> which associates a timeout with a method in a RestClient implementation.
+    /// </summary>
+    public sealed class TimeoutAttribute : Attribute, IMetadataAware
+    {
+        private readonly TimeSpan timeout;
+
+        public TimeoutAttribute(int interval, TimeScale scale)
+        {
+            Check.That(interval > 0, "A positive interval was expected.");
+
+            this.timeout = TimeScaleHelpers.BuildTimeSpan(interval, scale);
+        }
+
+        public void OnAttachMetadata(RequestMetadata metadata)
+        {
+            metadata.Timeout = this.timeout;
+        }
+    }
+}

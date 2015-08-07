@@ -1,4 +1,4 @@
-﻿// The MIT License (MIT)
+// The MIT License (MIT)
 // 
 // Copyright (C) 2015, Matthew Kleinschafer.
 // 
@@ -20,6 +20,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Reflection;
+namespace DynamicRestClient.IO.Serialization
+{
+    using System;
+    using System.IO;
 
-[assembly: AssemblyTitle("DynamicRestClient")]
+    /// <summary>
+    /// Represents a utility that deserializes objects from text.
+    /// </summary>
+    public interface IDeserializer
+    {
+        /// <summary>
+        /// Deserializes an object from the given <see cref="TextReader"/> of the given <see cref="Type"/>.
+        /// </summary>
+        object Deserialize(Type type, TextReader reader);
+    }
+}

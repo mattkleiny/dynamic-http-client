@@ -1,4 +1,4 @@
-﻿// The MIT License (MIT)
+// The MIT License (MIT)
 // 
 // Copyright (C) 2015, Matthew Kleinschafer.
 // 
@@ -20,6 +20,28 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Reflection;
+namespace DynamicRestClient.IO
+{
+    using System.Threading.Tasks;
 
-[assembly: AssemblyTitle("DynamicRestClient")]
+    /// <summary>
+    /// An executor for <see cref="IRequest"/>s.
+    /// </summary>
+    public interface IRequestExecutor
+    {
+        /// <summary>
+        /// Creates a new <see cref="IRequestBuilder"/>.
+        /// </summary>
+        IRequestBuilder BuildRequest();
+
+        /// <summary>
+        /// Executes the given <see cref="IRequest"/> and returns the <see cref="IResponse"/>.
+        /// </summary>
+        IResponse ExecuteRequest(IRequest request);
+
+        /// <summary>
+        /// Asynchronously executes the given <see cref="IRequest"/> and returns a task representing the operation.
+        /// </summary>
+        Task<IResponse> ExecuteRequestAsync(IRequest request);
+    }
+}

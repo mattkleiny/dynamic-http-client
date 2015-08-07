@@ -20,6 +20,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Reflection;
+namespace DynamicRestClient.Metadata
+{
+    using System;
 
-[assembly: AssemblyTitle("DynamicRestClient")]
+    /// <summary>
+    /// Occurs if there is an error in the metadata used to construct a proxy.
+    /// </summary>
+    [Serializable]
+    public class InvalidMetadataException : Exception
+    {
+        public InvalidMetadataException(string message)
+            : base(message)
+        {
+        }
+    }
+}

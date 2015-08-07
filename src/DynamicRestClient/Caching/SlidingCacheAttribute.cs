@@ -20,6 +20,25 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Reflection;
+namespace DynamicRestClient.Caching
+{
+    using System;
+    using IO.Caching;
 
-[assembly: AssemblyTitle("DynamicRestClient")]
+    /// <summary>
+    /// A <see cref="CachingAttribute"/> that describes a sliding expiration policy.
+    /// </summary>
+    public sealed class SlidingCacheAttribute : CachingAttribute
+    {
+        private readonly TimeSpan interval;
+
+        public SlidingCacheAttribute(int interval, TimeScale scale)
+        {
+            Check.That(interval > 0, "A positive interval was expected.");
+
+            this.interval = TimeScaleHelpers.BuildTimeSpan(interval, scale);
+        }
+
+        protected override IExpirationPolicy ExpirationPolicy => ExpirationPolicyFactory.BuildSlidingExpirationPolicy(this.interval);
+    }
+}

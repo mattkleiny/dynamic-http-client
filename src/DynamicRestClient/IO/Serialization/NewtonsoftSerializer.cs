@@ -20,6 +20,37 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Reflection;
+namespace DynamicRestClient.IO.Serialization
+{
+    using System;
+    using System.IO;
+    using System.Text;
+    using Newtonsoft.Json;
 
-[assembly: AssemblyTitle("DynamicRestClient")]
+    /// <summary>
+    /// A <see cref="ISerializer"/> that uses Newtonsoft's JSON serializer.
+    /// </summary>
+    public sealed class NewtonsoftSerializer : ISerializer
+    {
+        private readonly JsonSerializer serializer = JsonSerializer.CreateDefault(SerializationConstants.DefaultSerializerSettings);
+
+        public string ContentType
+        {
+            get { return "application/json"; }
+        }
+
+        public string Serialize(Type type, object content)
+        {
+            Check.NotNull(content, "Valid content was expected.");
+
+            var builder = new StringBuilder();
+
+            using (var writer = new StringWriter(builder))
+            {
+                this.serializer.Serialize(writer, content, type);
+            }
+
+            return builder.ToString();
+        }
+    }
+}

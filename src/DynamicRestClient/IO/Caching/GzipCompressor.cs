@@ -20,6 +20,23 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Reflection;
+namespace DynamicRestClient.IO.Caching
+{
+    using System;
 
-[assembly: AssemblyTitle("DynamicRestClient")]
+    /// <summary>
+    /// A <see cref="ICompressor"/> that uses GZip compression.
+    /// </summary>
+    public sealed class GzipCompressor : ICompressor
+    {
+        public byte[] Compress(byte[] rawBytes)
+        {
+            throw new NotImplementedException();
+        }
+
+        public byte[] Decompress(byte[] compressedBytes)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}

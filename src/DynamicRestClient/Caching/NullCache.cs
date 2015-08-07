@@ -20,6 +20,22 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Reflection;
+namespace DynamicRestClient.Caching
+{
+    using System;
 
-[assembly: AssemblyTitle("DynamicRestClient")]
+    /// <summary>
+    /// A no-op <see cref="ICache"/> implementation.
+    /// </summary>
+    public sealed class NullCache : ICache
+    {
+        public T GetOrCompute<T>(string key, Func<T> computeDelegate, Func<T, bool> shouldCachePredicate)
+        {
+            Check.NotNullOrEmpty(key, nameof(key));
+            Check.NotNull(computeDelegate, nameof(computeDelegate));
+            Check.NotNull(shouldCachePredicate, nameof(shouldCachePredicate));
+
+            return computeDelegate(); // always compute
+        }
+    }
+}

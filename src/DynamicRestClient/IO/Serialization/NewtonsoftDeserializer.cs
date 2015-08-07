@@ -1,4 +1,4 @@
-﻿// The MIT License (MIT)
+// The MIT License (MIT)
 // 
 // Copyright (C) 2015, Matthew Kleinschafer.
 // 
@@ -20,6 +20,25 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Reflection;
+namespace DynamicRestClient.IO.Serialization
+{
+    using System;
+    using System.IO;
+    using Newtonsoft.Json;
 
-[assembly: AssemblyTitle("DynamicRestClient")]
+    /// <summary>
+    /// A <see cref="IDeserializer"/> that uses Newtonsoft's JSON deserializer.
+    /// </summary>
+    public sealed class NewtonsoftDeserializer : IDeserializer
+    {
+        private readonly JsonSerializer serializer = JsonSerializer.CreateDefault(SerializationConstants.DefaultSerializerSettings);
+
+        public object Deserialize(Type type, TextReader reader)
+        {
+            Check.NotNull(type, "A valid type was expected.");
+            Check.NotNull(reader, "A valid text reader was expected.");
+
+            return this.serializer.Deserialize(reader, type);
+        }
+    }
+}

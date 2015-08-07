@@ -20,6 +20,23 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Reflection;
+namespace DynamicRestClient.Caching
+{
+    using System;
 
-[assembly: AssemblyTitle("DynamicRestClient")]
+    /// <summary>
+    /// General settings for a <see cref="ICache"/> for a <see cref="CachingAttribute"/>.
+    /// </summary>
+    public sealed class CacheSettings
+    {
+        /// <summary>
+        /// The absolute expiration time for the cache entry.
+        /// </summary>
+        public DateTime ExpirationTime { get; set; }
+
+        /// <summary>
+        /// A sliding expiration interval for the cache entry.
+        /// </summary>
+        public TimeSpan SlidingExpiration { get; set; }
+    }
+}

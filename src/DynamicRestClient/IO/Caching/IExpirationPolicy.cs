@@ -1,4 +1,4 @@
-﻿// The MIT License (MIT)
+// The MIT License (MIT)
 // 
 // Copyright (C) 2015, Matthew Kleinschafer.
 // 
@@ -20,6 +20,18 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Reflection;
+namespace DynamicRestClient.IO.Caching
+{
+    using DynamicRestClient.Caching;
 
-[assembly: AssemblyTitle("DynamicRestClient")]
+    /// <summary>
+    /// Defines a policy for building expiration settings for a <see cref="IRequest"/>.
+    /// </summary>
+    public interface IExpirationPolicy
+    {
+        /// <summary>
+        /// Builds the <see cref="CacheSettings"/> for the given <see cref="IRequest"/>.
+        /// </summary>
+        CacheSettings BuildCacheSettings(IRequest request);
+    }
+}

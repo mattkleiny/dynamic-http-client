@@ -1,4 +1,4 @@
-﻿// The MIT License (MIT)
+// The MIT License (MIT)
 // 
 // Copyright (C) 2015, Matthew Kleinschafer.
 // 
@@ -20,6 +20,20 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Reflection;
+namespace DynamicRestClient.Attributes.Methods
+{
+    using System;
 
-[assembly: AssemblyTitle("DynamicRestClient")]
+    /// <summary>
+    /// A <see cref="MethodAttribute"/> that denotes the given 
+    /// method is equivalent to a <see cref="RestMethod.Post"/> request.
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Method)]
+    public sealed class PostAttribute : MethodAttribute
+    {
+        public PostAttribute(string path)
+            : base(RestMethod.Post, path)
+        {
+        }
+    }
+}

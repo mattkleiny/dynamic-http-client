@@ -20,6 +20,17 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Reflection;
-
-[assembly: AssemblyTitle("DynamicRestClient")]
+namespace DynamicRestClient
+{
+    /// <summary>
+    /// Supported units of time supported by a few utilities in this package.
+    /// </summary>
+    public enum TimeScale
+    {
+        Milliseconds,
+        Seconds,
+        Minutes,
+        Hours,
+        Days
+    }
+}

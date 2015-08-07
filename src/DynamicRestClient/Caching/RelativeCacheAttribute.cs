@@ -20,6 +20,25 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Reflection;
+namespace DynamicRestClient.Caching
+{
+    using System;
+    using IO.Caching;
 
-[assembly: AssemblyTitle("DynamicRestClient")]
+    /// <summary>
+    /// A <see cref="CachingAttribute"/> that describes a relative expiration policy.
+    /// </summary>
+    public sealed class RelativeCacheAttribute : CachingAttribute
+    {
+        private readonly TimeSpan interval;
+
+        public RelativeCacheAttribute(int interval, TimeScale scale)
+        {
+            Check.That(interval > 0, "A positive interval was expected.");
+
+            this.interval = TimeScaleHelpers.BuildTimeSpan(interval, scale);
+        }
+
+        protected override IExpirationPolicy ExpirationPolicy => ExpirationPolicyFactory.BuildRelativeExpirationPolicy(this.interval);
+    }
+}

@@ -1,4 +1,4 @@
-﻿// The MIT License (MIT)
+// The MIT License (MIT)
 // 
 // Copyright (C) 2015, Matthew Kleinschafer.
 // 
@@ -20,6 +20,18 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Reflection;
+namespace DynamicRestClient.Metadata
+{
+    using System;
 
-[assembly: AssemblyTitle("DynamicRestClient")]
+    /// <summary>
+    /// Represents an <see cref="Attribute"/> which contributes to <see cref="RequestMetadata"/>.
+    /// </summary>
+    public interface IMetadataAware
+    {
+        /// <summary>
+        /// Attaches metadata to the given <see cref="RequestMetadata"/> object.
+        /// </summary>
+        void OnAttachMetadata(RequestMetadata metadata);
+    }
+}

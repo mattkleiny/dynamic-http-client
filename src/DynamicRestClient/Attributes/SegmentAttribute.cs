@@ -20,6 +20,23 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Reflection;
+namespace DynamicRestClient.Attributes
+{
+    using System;
 
-[assembly: AssemblyTitle("DynamicRestClient")]
+    /// <summary>
+    /// Associates a method parameter with a URI segment parameter.
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Parameter)]
+    public sealed class SegmentAttribute : ParameterAttribute
+    {
+        public SegmentAttribute(string name)
+        {
+            Check.NotNullOrEmpty(name, "A valid name was expected.");
+
+            Name = name;
+        }
+
+        public string Name { get; }
+    }
+}
