@@ -25,6 +25,7 @@ namespace DynamicRestClient.Proxy
     using System;
     using System.Collections.Concurrent;
     using System.IO;
+    using System.Linq;
     using System.Net;
     using System.Reflection;
     using System.Threading;
@@ -86,7 +87,14 @@ namespace DynamicRestClient.Proxy
 
             if (metadata.IsAsynchronous)
             {
-                invocation.ReturnValue = ExecuteTask(_ => InterceptInner(invocation, metadata));
+                var task = ExecuteTask(_ => InterceptInner(invocation, metadata));
+
+                if (invocation.Method.ReturnType.GenericTypeArguments.Any())
+                {
+                    throw new NotSupportedException("Still figuring out how to get covariant Task<TResult>s into this damn property.");
+                }
+
+                invocation.ReturnValue = task;
             }
             else
             {
@@ -120,8 +128,6 @@ namespace DynamicRestClient.Proxy
         /// </summary>
         private IRequest BuildRequestFromMetadata(IInvocation invocation, RequestMetadata metadata)
         {
-            // TODO: push this down to the executor/SPI?
-
             var builder = this.executor.BuildRequest();
 
             // specify path and method on the request

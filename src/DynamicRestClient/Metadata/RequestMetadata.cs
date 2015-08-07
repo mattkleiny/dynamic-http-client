@@ -34,6 +34,20 @@ namespace DynamicRestClient.Metadata
     [DebuggerDisplay("{Method}: {Path}")]
     public sealed class RequestMetadata
     {
+        // potentially expensive to have many of these collections lying around the metadata 
+        // cache, especially if they have no entries. initialize with 0 capacity and we'll incur 
+        // the cost of resizing in the factory.
+
+        /// <summary>
+        /// Extra headers to attach to the request.
+        /// </summary>
+        public IDictionary<string, string> Headers { get; } = new Dictionary<string, string>(0, StringComparer.OrdinalIgnoreCase);
+
+        /// <summary>
+        /// URL segments to attach to the request.
+        /// </summary>
+        public ICollection<UrlSegmentMetadata> UrlSegments { get; } = new List<UrlSegmentMetadata>(0);
+
         /// <summary>
         /// The <see cref="RestMethod"/> to use.
         /// </summary>
@@ -83,19 +97,5 @@ namespace DynamicRestClient.Metadata
         /// The <see cref="ICachingPolicy"/> for the request, or null if there is no policy.
         /// </summary>
         public ICachingPolicy CachingPolicy { get; set; }
-
-        // potentially expensive to have many of these collections lying around the metadata 
-        // cache, especially if they have no entries. initialize with 0 capacity and we'll incur 
-        // the cost of resizing in the factory.
-
-        /// <summary>
-        /// Extra headers to attach to the request.
-        /// </summary>
-        public IDictionary<string, string> Headers { get; } = new Dictionary<string, string>(0, StringComparer.OrdinalIgnoreCase);
-
-        /// <summary>
-        /// URL segments to attach to the request.
-        /// </summary>
-        public ICollection<UrlSegmentMetadata> UrlSegments { get; } = new List<UrlSegmentMetadata>(0);
     }
 }

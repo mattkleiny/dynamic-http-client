@@ -24,11 +24,16 @@ namespace DynamicRestClient.Tests
 {
     using System.ComponentModel;
     using System.Linq;
+    using System.Runtime.Caching;
     using System.Runtime.Serialization;
+    using System.Threading.Tasks;
     using Attributes;
     using Attributes.Methods;
+    using Caching;
     using DynamicRestClient.IO;
+    using DynamicRestClient.IO.Caching;
     using DynamicRestClient.IO.Serialization;
+    using DynamicRestClient.Utilities;
     using Xunit;
 
     /// <summary>
@@ -41,6 +46,7 @@ namespace DynamicRestClient.Tests
         /// </summary>
         private static readonly RestClientFactory Factory = new RestClientFactory
         {
+            Cache = new ObjectCacheAdapter(new MemoryCache("REST Cache")),
             Executor = new HttpClientRequestExecutor("http://jsonplaceholder.typicode.com/")
         };
 
@@ -50,9 +56,9 @@ namespace DynamicRestClient.Tests
         private readonly IJsonPlaceholderClient client = Factory.Build<IJsonPlaceholderClient>();
 
         [Fact, Category(Categories.Slow)]
-        public void GetPosts_Able_To_Request_And_Retrieve_Post_Information()
+        public async Task GetPosts_Able_To_Request_And_Retrieve_Post_Information()
         {
-            var posts = this.client.GetPosts();
+            var posts = await this.client.GetPosts();
 
             Assert.NotNull(posts);
             Assert.True(posts.Any());
@@ -66,7 +72,8 @@ namespace DynamicRestClient.Tests
         public interface IJsonPlaceholderClient
         {
             [Get("/posts")]
-            Post[] GetPosts();
+            [RelativeCache(60, TimeScale.Seconds, Representation = CachedRepresentation.Compressed)]
+            Task<Post[]> GetPosts();
         }
 
         /// <summary>
