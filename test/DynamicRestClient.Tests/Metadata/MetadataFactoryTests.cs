@@ -28,6 +28,7 @@ namespace DynamicRestClient.Tests.Metadata
     using Caching;
     using DynamicRestClient.IO.Serialization;
     using DynamicRestClient.Metadata;
+    using DynamicRestClient.Utilities;
     using Xunit;
 
     public sealed class MetadataFactoryTests
@@ -115,10 +116,16 @@ namespace DynamicRestClient.Tests.Metadata
             Assert.Throws<InvalidMetadataException>(() => MetadataFactory.InspectMethod(typeof (ITestInterface).GetMethod("MissingMethodAttribute")));
         }
 
+        /// <summary>
+        /// A plain old interface without [Serializer] or [Deserializer] attributes (for generating exceptions).
+        /// </summary>
         private interface ITestClientWithoutSerializer
         {
         }
 
+        /// <summary>
+        /// A test interface with a variety of different metadata states
+        /// </summary>
         [Serializer(typeof (NewtonsoftSerializer))]
         [Deserializer(typeof (NewtonsoftDeserializer))]
         private interface ITestInterface

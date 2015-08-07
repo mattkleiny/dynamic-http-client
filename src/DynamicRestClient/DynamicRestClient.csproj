@@ -112,7 +112,6 @@
     <Compile Include="IO\Compression\StreamingCompressor.cs" />
     <Compile Include="IO\HttpClientRequestExecutor.cs" />
     <Compile Include="Proxy\CastleLoggerAdapter.cs" />
-    <Compile Include="TimeScale.cs" />
     <Compile Include="IO\AbstractRequest.cs" />
     <Compile Include="IO\Authentication\AuthenticatedRequestExecutor.cs" />
     <Compile Include="IO\Authentication\BasicAuthenticationPolicy.cs" />
@@ -151,7 +150,8 @@
     <Compile Include="Proxy\RestClientInterceptor.cs" />
     <Compile Include="RestClientFactory.cs" />
     <Compile Include="RestMethod.cs" />
-    <Compile Include="TimeScaleHelpers.cs" />
+    <Compile Include="Utilities\TimeScale.cs" />
+    <Compile Include="Utilities\TimeScaleHelpers.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

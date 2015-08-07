@@ -20,27 +20,17 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-namespace DynamicRestClient.Tests
+namespace DynamicRestClient.Utilities
 {
-    using System;
-    using Xunit;
-
-    public class TimeScaleHelpersTests
+    /// <summary>
+    /// Supported units of time supported by a few utilities in this package.
+    /// </summary>
+    public enum TimeScale
     {
-        [Fact]
-        public void BuildTimeSpan_Honours_Interval_And_Scale()
-        {
-            Assert.Equal(TimeSpan.FromMilliseconds(10), TimeScaleHelpers.BuildTimeSpan(10, TimeScale.Milliseconds));
-            Assert.Equal(TimeSpan.FromSeconds(10), TimeScaleHelpers.BuildTimeSpan(10, TimeScale.Seconds));
-            Assert.Equal(TimeSpan.FromHours(10), TimeScaleHelpers.BuildTimeSpan(10, TimeScale.Hours));
-            Assert.Equal(TimeSpan.FromMinutes(10), TimeScaleHelpers.BuildTimeSpan(10, TimeScale.Minutes));
-            Assert.Equal(TimeSpan.FromDays(10), TimeScaleHelpers.BuildTimeSpan(10, TimeScale.Days));
-        }
-
-        [Fact]
-        public void BuildTimeSpan_Complains_About_Unknown_Scale()
-        {
-            Assert.Throws<ArgumentException>(() => TimeScaleHelpers.BuildTimeSpan(10, (TimeScale) 15));
-        }
+        Milliseconds,
+        Seconds,
+        Minutes,
+        Hours,
+        Days
     }
 }

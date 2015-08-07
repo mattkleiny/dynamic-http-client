@@ -103,14 +103,14 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Categories.cs" />
-    <Compile Include="GeneralIntegrationTests.cs" />
+    <Compile Include="IntegrationTests.cs" />
     <Compile Include="IO\RequestHelpersTests.cs" />
     <Compile Include="IO\SerializedBodyTests.cs" />
     <Compile Include="Metadata\MetadataFactoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proxy\CastleLoggerAdapterTests.cs" />
     <Compile Include="TestFixture.cs" />
-    <Compile Include="TimeScaleHelpersTests.cs" />
+    <Compile Include="Utilities\TimeScaleHelpersTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\DynamicRestClient\DynamicRestClient.csproj">

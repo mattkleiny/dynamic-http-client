@@ -24,6 +24,7 @@ namespace DynamicRestClient.Attributes
 {
     using System;
     using Metadata;
+    using Utilities;
 
     /// <summary>
     /// A <see cref="Attribute"/> which associates a timeout with a method in a RestClient implementation.

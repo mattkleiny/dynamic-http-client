@@ -24,6 +24,7 @@ namespace DynamicRestClient.Caching
 {
     using System;
     using IO.Caching;
+    using Utilities;
 
     /// <summary>
     /// A <see cref="CachingAttribute"/> that describes a sliding expiration policy.
