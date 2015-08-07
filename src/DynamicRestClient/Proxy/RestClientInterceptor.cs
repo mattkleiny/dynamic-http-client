@@ -87,14 +87,19 @@ namespace DynamicRestClient.Proxy
 
             if (metadata.IsAsynchronous)
             {
+                // start the task executing
                 var task = ExecuteTask(_ => InterceptInner(invocation, metadata));
 
                 if (invocation.Method.ReturnType.GenericTypeArguments.Any())
                 {
-                    throw new NotSupportedException("Still figuring out how to get covariant Task<TResult>s into this damn property.");
+                    // Task<T> is not co-variant; we need to do some trickery to 
+                    // get the right <T> in the resultant Task object.
+                    invocation.ReturnValue = CastTask(task, metadata.ResultType);
                 }
-
-                invocation.ReturnValue = task;
+                else
+                {
+                    invocation.ReturnValue = task;
+                }
             }
             else
             {
@@ -214,6 +219,32 @@ namespace DynamicRestClient.Proxy
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Given a <see cref="Task{T}"/> of, casts the result as <see cref="resultType"/>.
+        /// </summary>
+        /// <remarks>This may be a hot-path depending on dynamic dispatch overhead.</remarks>
+        private static Task CastTask(Task<object> task, Type resultType)
+        {
+            var completionSourceType = typeof (TaskCompletionSource<>).MakeGenericType(resultType);
+            var completionSource = (dynamic) Activator.CreateInstance(completionSourceType);
+
+            task.ContinueWith(antecendent =>
+            {
+                try
+                {
+                    dynamic result = antecendent.Result;
+
+                    completionSource.SetResult(result);
+                }
+                catch (Exception e)
+                {
+                    completionSource.SetException(e);
+                }
+            });
+
+            return completionSource.Task;
         }
     }
 }
