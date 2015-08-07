@@ -47,7 +47,7 @@ namespace DynamicRestClient.IO.Compression
 
         public byte[] Compress(byte[] bytes)
         {
-            Check.NotNull(bytes, "A valid byte array was expected.");
+            Check.NotNull(bytes, nameof(bytes));
 
             using (var output = new MemoryStream())
             {
@@ -64,7 +64,7 @@ namespace DynamicRestClient.IO.Compression
 
         public byte[] Decompress(byte[] bytes)
         {
-            Check.NotNull(bytes, "A valid byte array was expected.");
+            Check.NotNull(bytes, nameof(bytes));
 
             using (var output = new MemoryStream())
             {

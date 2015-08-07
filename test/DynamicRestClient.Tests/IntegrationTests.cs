@@ -31,7 +31,9 @@ namespace DynamicRestClient.Tests
     using Attributes.Methods;
     using Caching;
     using DynamicRestClient.IO;
+    using DynamicRestClient.IO.Caching;
     using DynamicRestClient.IO.Serialization;
+    using DynamicRestClient.Utilities;
     using Xunit;
 
     /// <summary>
@@ -58,16 +60,18 @@ namespace DynamicRestClient.Tests
         /// </summary>
         [Serializer(typeof (NewtonsoftSerializer))]
         [Deserializer(typeof (NewtonsoftDeserializer))]
+        [Header("Disposition", "Friendly, thanks for sharing!")]
         public interface ITestClient
         {
             [Get("/posts")]
+            [RelativeCache(60, TimeScale.Seconds, Representation = CachedRepresentation.Compressed)]
             Post[] GetPosts();
 
             [Get("/posts/{id}")]
             Post GetPost(int id);
 
             [Post("/posts")]
-            void CreatePost([Body] Post post);
+            Post CreatePost([Body] Post post);
 
             [Delete("/posts/{id}")]
             void DeletePost(int id);
@@ -79,7 +83,7 @@ namespace DynamicRestClient.Tests
             Task<Post> GetPostAsync(int id);
 
             [Post("/posts")]
-            Task CreatePostAsync([Body] Post post);
+            Task<Post> CreatePostAsync([Body] Post post);
 
             [Delete("/posts/{id}")]
             Task DeletePostAsync(int id);
@@ -104,7 +108,7 @@ namespace DynamicRestClient.Tests
             public string Body { get; set; }
         }
 
-        #region Blocking Methods
+        #region Sync Methods
 
         [Fact, Category(Categories.Slow)]
         public void GetPosts_Succeeds()
@@ -126,11 +130,13 @@ namespace DynamicRestClient.Tests
         [Fact, Category(Categories.Slow)]
         public void CreatePost_Succeeds()
         {
-            this.client.CreatePost(new Post
+            var post = this.client.CreatePost(new Post
             {
                 Title = "Test",
                 Body = "Test test test"
             });
+
+            Assert.NotNull(post);
         }
 
         [Fact, Category(Categories.Slow)]
@@ -163,11 +169,13 @@ namespace DynamicRestClient.Tests
         [Fact, Category(Categories.Slow)]
         public async Task CreatePostAsync_Succeeds()
         {
-            await this.client.CreatePostAsync(new Post
+            var post = await this.client.CreatePostAsync(new Post
             {
                 Title = "Test",
                 Body = "Test test test"
             });
+
+            Assert.NotNull(post);
         }
 
         [Fact, Category(Categories.Slow)]
