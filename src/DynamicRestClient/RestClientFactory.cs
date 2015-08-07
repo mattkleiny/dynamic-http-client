@@ -59,7 +59,7 @@ namespace DynamicRestClient
         public TaskScheduler Scheduler { get; set; }
 
         /// <summary>
-        /// Builds the resultant REST client.t
+        /// Builds the resultant REST client.
         /// </summary>
         public TClient Build<TClient>()
         {
