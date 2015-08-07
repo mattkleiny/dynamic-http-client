@@ -106,7 +106,9 @@
     <Compile Include="Caching\NullCache.cs" />
     <Compile Include="Caching\RelativeCacheAttribute.cs" />
     <Compile Include="Caching\SlidingCacheAttribute.cs" />
+    <Compile Include="IO\Caching\DeflateCompressor.cs" />
     <Compile Include="IO\Caching\GzipCompressor.cs" />
+    <Compile Include="IO\Caching\StreamingCompressor.cs" />
     <Compile Include="TimeScale.cs" />
     <Compile Include="IO\AbstractRequest.cs" />
     <Compile Include="IO\Authentication\AuthenticatedRequestExecutor.cs" />

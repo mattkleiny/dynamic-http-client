@@ -26,27 +26,27 @@ namespace DynamicRestClient.IO.Caching
     using System.IO.Compression;
 
     /// <summary>
-    /// A gzip <see cref="StreamingCompressor"/> specialization for GZip.
+    /// A <see cref="StreamingCompressor"/> specialization for Deflate.
     /// </summary>
-    public sealed class GzipCompressor : StreamingCompressor
+    public sealed class DeflateCompressor : StreamingCompressor
     {
-        public GzipCompressor()
+        public DeflateCompressor()
         {
         }
 
-        public GzipCompressor(int bufferSize)
+        public DeflateCompressor(int bufferSize)
             : base(bufferSize)
         {
         }
 
         protected override Stream CreateCompressStream(Stream stream)
         {
-            return new GZipStream(stream, CompressionMode.Compress);
+            return new DeflateStream(stream, CompressionMode.Compress);
         }
 
         protected override Stream CreateDecompressStream(Stream stream)
         {
-            return new GZipStream(stream, CompressionMode.Decompress);
+            return new DeflateStream(stream, CompressionMode.Decompress);
         }
     }
 }
