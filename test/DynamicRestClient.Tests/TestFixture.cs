@@ -20,32 +20,24 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-namespace DynamicRestClient.IO.Serialization
+namespace DynamicRestClient.Tests
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Serialization;
+    using Ploeh.AutoFixture;
+    using Ploeh.AutoFixture.AutoNSubstitute;
 
     /// <summary>
-    /// Common constants related to serialization.
+    /// Base class for any test fixture in this project.
     /// </summary>
-    internal static class SerializationConstants
+    public abstract class TestFixture
     {
-        /// <summary>
-        /// Default <see cref="JsonSerializerSettings"/> for Newtonsoft.
-        /// </summary>
-        public static readonly JsonSerializerSettings DefaultSerializerSettings = new JsonSerializerSettings
+        protected TestFixture()
         {
-            TraceWriter = new DiagnosticsTraceWriter(),
-#if DEBUG
-            Formatting = Formatting.Indented,
-#else
-                Formatting = Formatting.None,
-#endif
-            NullValueHandling = NullValueHandling.Ignore,
-            DefaultValueHandling = DefaultValueHandling.Ignore,
-            MissingMemberHandling = MissingMemberHandling.Ignore,
-            ObjectCreationHandling = ObjectCreationHandling.Replace,
-            ReferenceLoopHandling = ReferenceLoopHandling.Error
-        };
+            Fixture.Customize(new AutoConfiguredNSubstituteCustomization());
+        }
+
+        /// <summary>
+        /// The <see cref="IFixture"/>.
+        /// </summary>
+        protected IFixture Fixture { get; } = new Fixture();
     }
 }

@@ -22,35 +22,53 @@
 
 namespace DynamicRestClient.Proxy
 {
-    using Castle.Core.Interceptor;
+    using System;
     using Castle.Core.Logging;
-    using Castle.DynamicProxy;
     using Common.Logging;
 
     /// <summary>
-    /// A supplier for Castle dynamic proxies.
+    /// An adapter from Castle logging to Common.Logging.
     /// </summary>
-    internal static class DynamicProxyFactory
+    internal sealed class CastleLoggerAdapter : LevelFilteredLogger
     {
-        /// <summary>
-        /// The <see cref="ProxyGenerator"/> to use. We want to build in-memory assemblies, and we'll cache the results manually.
-        /// </summary>
-        private static readonly ProxyGenerator Generator = new ProxyGenerator(new DefaultProxyBuilder())
+        private readonly ILog log;
+
+        public CastleLoggerAdapter(ILog log)
         {
-            Logger = new CastleLoggerAdapter(LogManager.GetLogger(typeof (DynamicProxyFactory)))
+            Check.NotNull(log, nameof(log));
+
+            this.log = log;
+        }
+
+        public override ILogger CreateChildLogger(string loggerName)
+        {
+            return new CastleLoggerAdapter(LogManager.GetLogger(loggerName));
+        }
+
+        protected override void Log(LoggerLevel loggerLevel, string loggerName, string message, Exception exception)
+        {
+            switch (loggerLevel)
             {
-                Level = LoggerLevel.Warn
+                case LoggerLevel.Debug:
+                    this.log.Debug(message, exception);
+                    break;
+
+                case LoggerLevel.Info:
+                    this.log.Info(message, exception);
+                    break;
+
+                case LoggerLevel.Warn:
+                    this.log.Warn(message, exception);
+                    break;
+
+                case LoggerLevel.Error:
+                    this.log.Error(message, exception);
+                    break;
+
+                case LoggerLevel.Fatal:
+                    this.log.Fatal(message, exception);
+                    break;
             }
-        };
-
-        /// <summary>
-        /// Builds a proxy of <see cref="TType"/> with the given <see cref="IInterceptor"/>.
-        /// </summary>
-        public static TType BuildProxy<TType>(IInterceptor interceptor)
-        {
-            Check.NotNull(interceptor, nameof(interceptor));
-
-            return (TType) Generator.CreateInterfaceProxyWithoutTarget(typeof (TType), interceptor);
         }
     }
 }

@@ -23,13 +23,11 @@
 namespace DynamicRestClient.IO
 {
     using System;
-    using System.Diagnostics;
     using Serialization;
 
     /// <summary>
     /// A <see cref="IRequestBody"/> that defers the serialization of some body object to a <see cref="ISerializer"/>.
     /// </summary>
-    [DebuggerDisplay("Serialized body via {Serializer}")]
     public sealed class SerializedBody : IRequestBody
     {
         /// <param name="body">The object to serialize.</param>

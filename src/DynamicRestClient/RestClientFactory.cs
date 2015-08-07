@@ -25,6 +25,7 @@ namespace DynamicRestClient
     using System.Threading.Tasks;
     using Caching;
     using IO;
+    using Metadata;
     using Proxy;
 
     /// <summary>
@@ -58,7 +59,7 @@ namespace DynamicRestClient
         public TaskScheduler Scheduler { get; set; }
 
         /// <summary>
-        /// Builds the resultant REST client.
+        /// Builds the resultant REST client.t
         /// </summary>
         public TClient Build<TClient>()
         {
@@ -66,7 +67,11 @@ namespace DynamicRestClient
             Check.NotNull(Cache, nameof(Cache));
             Check.NotNull(Scheduler, nameof(Scheduler));
 
-            return DynamicProxyFactory.BuildProxy<TClient>(new RestClientInterceptor(Executor, Cache, Scheduler));
+            MetadataFactory.InspectType(typeof (TClient));
+
+            var interceptor = new RestClientInterceptor(Executor, Cache, Scheduler);
+
+            return DynamicProxyFactory.BuildProxy<TClient>(interceptor);
         }
     }
 }

@@ -20,32 +20,26 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-namespace DynamicRestClient.IO.Serialization
+namespace DynamicRestClient.Tests.IO
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Serialization;
+    using System.Collections.Generic;
+    using DynamicRestClient.IO;
+    using Xunit;
 
-    /// <summary>
-    /// Common constants related to serialization.
-    /// </summary>
-    internal static class SerializationConstants
+    public class RequestHelpersTests
     {
-        /// <summary>
-        /// Default <see cref="JsonSerializerSettings"/> for Newtonsoft.
-        /// </summary>
-        public static readonly JsonSerializerSettings DefaultSerializerSettings = new JsonSerializerSettings
+        [Fact]
+        public void SubstituteUrlParameters_Replaces_Well_Known_Segments_In_String()
         {
-            TraceWriter = new DiagnosticsTraceWriter(),
-#if DEBUG
-            Formatting = Formatting.Indented,
-#else
-                Formatting = Formatting.None,
-#endif
-            NullValueHandling = NullValueHandling.Ignore,
-            DefaultValueHandling = DefaultValueHandling.Ignore,
-            MissingMemberHandling = MissingMemberHandling.Ignore,
-            ObjectCreationHandling = ObjectCreationHandling.Replace,
-            ReferenceLoopHandling = ReferenceLoopHandling.Error
-        };
+            const string url = "https://test.com/{key1}/inner/{key2}";
+
+            var substituted = RequestHelpers.SubstituteUrlParameters(url, new[]
+            {
+                new KeyValuePair<string, string>("key1", "value1"),
+                new KeyValuePair<string, string>("key2", "value2")
+            });
+
+            Assert.Equal("https://test.com/value1/inner/value2", substituted);
+        }
     }
 }

@@ -20,32 +20,27 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-namespace DynamicRestClient.IO.Serialization
+namespace DynamicRestClient.Tests
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Serialization;
+    using System;
+    using Xunit;
 
-    /// <summary>
-    /// Common constants related to serialization.
-    /// </summary>
-    internal static class SerializationConstants
+    public class TimeScaleHelpersTests
     {
-        /// <summary>
-        /// Default <see cref="JsonSerializerSettings"/> for Newtonsoft.
-        /// </summary>
-        public static readonly JsonSerializerSettings DefaultSerializerSettings = new JsonSerializerSettings
+        [Fact]
+        public void BuildTimeSpan_Honours_Interval_And_Scale()
         {
-            TraceWriter = new DiagnosticsTraceWriter(),
-#if DEBUG
-            Formatting = Formatting.Indented,
-#else
-                Formatting = Formatting.None,
-#endif
-            NullValueHandling = NullValueHandling.Ignore,
-            DefaultValueHandling = DefaultValueHandling.Ignore,
-            MissingMemberHandling = MissingMemberHandling.Ignore,
-            ObjectCreationHandling = ObjectCreationHandling.Replace,
-            ReferenceLoopHandling = ReferenceLoopHandling.Error
-        };
+            Assert.Equal(TimeSpan.FromMilliseconds(10), TimeScaleHelpers.BuildTimeSpan(10, TimeScale.Milliseconds));
+            Assert.Equal(TimeSpan.FromSeconds(10), TimeScaleHelpers.BuildTimeSpan(10, TimeScale.Seconds));
+            Assert.Equal(TimeSpan.FromHours(10), TimeScaleHelpers.BuildTimeSpan(10, TimeScale.Hours));
+            Assert.Equal(TimeSpan.FromMinutes(10), TimeScaleHelpers.BuildTimeSpan(10, TimeScale.Minutes));
+            Assert.Equal(TimeSpan.FromDays(10), TimeScaleHelpers.BuildTimeSpan(10, TimeScale.Days));
+        }
+
+        [Fact]
+        public void BuildTimeSpan_Complains_About_Unknown_Scale()
+        {
+            Assert.Throws<ArgumentException>(() => TimeScaleHelpers.BuildTimeSpan(10, (TimeScale) 15));
+        }
     }
 }

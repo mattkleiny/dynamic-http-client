@@ -20,32 +20,26 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-namespace DynamicRestClient.IO.Serialization
+namespace DynamicRestClient.Tests.IO
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Serialization;
+    using DynamicRestClient.IO;
+    using DynamicRestClient.IO.Serialization;
+    using NSubstitute;
+    using Ploeh.AutoFixture;
+    using Xunit;
 
-    /// <summary>
-    /// Common constants related to serialization.
-    /// </summary>
-    internal static class SerializationConstants
+    public class SerializedBodyTests : TestFixture
     {
-        /// <summary>
-        /// Default <see cref="JsonSerializerSettings"/> for Newtonsoft.
-        /// </summary>
-        public static readonly JsonSerializerSettings DefaultSerializerSettings = new JsonSerializerSettings
+        [Fact]
+        public void Content_Delegates_To_Serialization_Mechanism()
         {
-            TraceWriter = new DiagnosticsTraceWriter(),
-#if DEBUG
-            Formatting = Formatting.Indented,
-#else
-                Formatting = Formatting.None,
-#endif
-            NullValueHandling = NullValueHandling.Ignore,
-            DefaultValueHandling = DefaultValueHandling.Ignore,
-            MissingMemberHandling = MissingMemberHandling.Ignore,
-            ObjectCreationHandling = ObjectCreationHandling.Replace,
-            ReferenceLoopHandling = ReferenceLoopHandling.Error
-        };
+            var serializer = Fixture.Create<ISerializer>();
+            var target = new object();
+            var body = new SerializedBody(target, serializer);
+
+            Assert.NotNull(body.Content); // invoke the Content property to hit the serializer
+
+            serializer.Received().Serialize(typeof (object), target);
+        }
     }
 }

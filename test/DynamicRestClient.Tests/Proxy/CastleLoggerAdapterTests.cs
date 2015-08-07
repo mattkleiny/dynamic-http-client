@@ -20,32 +20,44 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-namespace DynamicRestClient.IO.Serialization
+namespace DynamicRestClient.Tests.Proxy
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Serialization;
+    using System;
+    using Castle.Core.Logging;
+    using Common.Logging;
+    using DynamicRestClient.Proxy;
+    using NSubstitute;
+    using Ploeh.AutoFixture;
+    using Xunit;
 
-    /// <summary>
-    /// Common constants related to serialization.
-    /// </summary>
-    internal static class SerializationConstants
+    public class CastleLoggerAdapterTests : TestFixture
     {
-        /// <summary>
-        /// Default <see cref="JsonSerializerSettings"/> for Newtonsoft.
-        /// </summary>
-        public static readonly JsonSerializerSettings DefaultSerializerSettings = new JsonSerializerSettings
+        [Fact]
+        public void Log_Delegates_To_Logger_Target_With_Correct_Log_Level()
         {
-            TraceWriter = new DiagnosticsTraceWriter(),
-#if DEBUG
-            Formatting = Formatting.Indented,
-#else
-                Formatting = Formatting.None,
-#endif
-            NullValueHandling = NullValueHandling.Ignore,
-            DefaultValueHandling = DefaultValueHandling.Ignore,
-            MissingMemberHandling = MissingMemberHandling.Ignore,
-            ObjectCreationHandling = ObjectCreationHandling.Replace,
-            ReferenceLoopHandling = ReferenceLoopHandling.Error
-        };
+            var log = Fixture.Create<ILog>();
+
+            var adapter = new CastleLoggerAdapter(log)
+            {
+                Level = LoggerLevel.Debug
+            };
+
+            var exception = new Exception();
+
+            adapter.Debug("Test", exception);
+            log.Received().Debug("Test", exception);
+
+            adapter.Info("Test", exception);
+            log.Received().Info("Test", exception);
+
+            adapter.Warn("Test", exception);
+            log.Received().Warn("Test", exception);
+
+            adapter.Error("Test", exception);
+            log.Received().Error("Test", exception);
+
+            adapter.Fatal("Test", exception);
+            log.Received().Fatal("Test", exception);
+        }
     }
 }
