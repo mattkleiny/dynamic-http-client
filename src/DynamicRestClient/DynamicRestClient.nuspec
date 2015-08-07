@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+
+<package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
+  <metadata>
+    <id>DynamicRestClient</id>
+    <version>1.0.0-CI00000</version>
+    <title>DynamicRestClient</title>
+    <authors>Matthew Kleinschafer</authors>
+    <owners>Matthew Kleinschafer</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A .NET Dynamic REST client generator that uses dynamic proxying techniques to build RESTful client interfaces.</description>
+    <copyright>Copyright© 2015, Matthew Kleinschafer.</copyright>
+  </metadata>
+</package>
