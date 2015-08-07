@@ -37,6 +37,6 @@ namespace DynamicRestClient.Caching
         /// The <see cref="shouldCachePredicate"/> is invoked after the <see cref="computeDelegate"/> to determine if the result is valid for caching.
         /// </summary>
         /// <remarks>This method should be thread-safe.</remarks>
-        T GetOrCompute<T>(string key, Func<T> computeDelegate, Func<T, bool> shouldCachePredicate);
+        T GetOrCompute<T>(string key, CacheSettings settings, Func<T> computeDelegate, Func<T, bool> shouldCachePredicate);
     }
 }

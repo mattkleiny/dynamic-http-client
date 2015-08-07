@@ -29,7 +29,7 @@ namespace DynamicRestClient.Caching
     /// </summary>
     public sealed class NullCache : ICache
     {
-        public T GetOrCompute<T>(string key, Func<T> computeDelegate, Func<T, bool> shouldCachePredicate)
+        public T GetOrCompute<T>(string key, CacheSettings settings, Func<T> computeDelegate, Func<T, bool> shouldCachePredicate)
         {
             Check.NotNullOrEmpty(key, nameof(key));
             Check.NotNull(computeDelegate, nameof(computeDelegate));

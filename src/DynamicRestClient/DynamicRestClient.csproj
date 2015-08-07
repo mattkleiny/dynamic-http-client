@@ -52,6 +52,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -88,6 +89,7 @@
     <Compile Include="Caching\CachingAttribute.cs" />
     <Compile Include="Caching\ICache.cs" />
     <Compile Include="Caching\NullCache.cs" />
+    <Compile Include="Caching\ObjectCacheAdapter.cs" />
     <Compile Include="Caching\RelativeCacheAttribute.cs" />
     <Compile Include="Caching\SlidingCacheAttribute.cs" />
     <Compile Include="IO\Compression\DeflateCompressor.cs" />
@@ -134,6 +136,7 @@
     <Compile Include="Proxy\RestClientInterceptor.cs" />
     <Compile Include="RestClientFactory.cs" />
     <Compile Include="RestMethod.cs" />
+    <Compile Include="Utilities\ThreadingExtensions.cs" />
     <Compile Include="Utilities\TimeScale.cs" />
     <Compile Include="Utilities\TimeScaleHelpers.cs" />
   </ItemGroup>

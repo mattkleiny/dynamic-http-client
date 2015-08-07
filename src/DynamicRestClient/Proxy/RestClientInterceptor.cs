@@ -170,6 +170,7 @@ namespace DynamicRestClient.Proxy
             {
                 // employ the response cache
                 return this.responseCache.GetOrCompute(policy.EvaluateCacheKey(request),
+                    policy.GetCacheSettings(request),
                     () => policy.GetCacheableResponse(this.executor.ExecuteRequest(request)),
                     policy.ShouldCache);
             }
