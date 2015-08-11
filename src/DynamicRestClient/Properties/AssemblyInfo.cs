@@ -24,4 +24,5 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 
 [assembly: AssemblyTitle("DynamicRestClient")]
+[assembly: AssemblyDescription("A .NET Dynamic REST client generator that uses dynamic proxying techniques to build RESTful client interfaces.")]
 [assembly: InternalsVisibleTo("DynamicRestClient.Tests")]
