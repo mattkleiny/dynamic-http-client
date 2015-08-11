@@ -23,7 +23,7 @@
 using System.Reflection;
 
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("MK Productions")]
 [assembly: AssemblyProduct("Dynamic REST Client")]
 [assembly: AssemblyCopyright("Copyright© 2015, Matthew Kleinschafer.")]
 [assembly: AssemblyTrademark("")]
