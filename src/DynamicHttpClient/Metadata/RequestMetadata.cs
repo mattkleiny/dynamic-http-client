@@ -18,7 +18,6 @@ namespace DynamicHttpClient.Metadata
     public Type                ResultType         { get; set; }
     public ISerializer         Serializer         { get; set; }
     public IDeserializer       Deserializer       { get; set; }
-    public TimeSpan?           Timeout            { get; set; }
     public bool                IsResponseRequired { get; set; }
     public bool                IsAsynchronous     { get; set; }
     public RequestBodyMetadata Body               { get; set; }

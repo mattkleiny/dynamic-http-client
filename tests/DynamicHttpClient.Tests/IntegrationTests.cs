@@ -21,12 +21,12 @@ namespace DynamicHttpClient.Tests
       Executor = new HttpClientRequestExecutor("http://jsonplaceholder.typicode.com/")
     };
 
-    private readonly ITestClient client = Factory.Build<ITestClient>();
+    private static readonly ITestClient Client = Factory.Build<ITestClient>();
 
     [Fact]
     public void GetPosts_succeeds()
     {
-      var posts = client.GetPosts();
+      var posts = Client.GetPosts();
 
       Assert.NotNull(posts);
       Assert.True(posts.Any());
@@ -35,7 +35,7 @@ namespace DynamicHttpClient.Tests
     [Fact]
     public void GetPost_succeeds()
     {
-      var post = client.GetPost(1);
+      var post = Client.GetPost(1);
 
       Assert.NotNull(post);
     }
@@ -43,7 +43,7 @@ namespace DynamicHttpClient.Tests
     [Fact]
     public void CreatePost_succeeds()
     {
-      var post = client.CreatePost(new Post
+      var post = Client.CreatePost(new Post
       {
         Title = "Test",
         Body  = "Test test test"
@@ -55,13 +55,13 @@ namespace DynamicHttpClient.Tests
     [Fact]
     public void DeletePost_succeeds()
     {
-      client.DeletePost(66);
+      Client.DeletePost(66);
     }
 
     [Fact]
     public async Task GetPostsAsync_succeeds()
     {
-      var posts = await client.GetPostsAsync();
+      var posts = await Client.GetPostsAsync();
 
       Assert.NotNull(posts);
       Assert.True(posts.Any());
@@ -70,7 +70,7 @@ namespace DynamicHttpClient.Tests
     [Fact]
     public async Task GetPostAsync_succeeds()
     {
-      var post = await client.GetPostAsync(1);
+      var post = await Client.GetPostAsync(1);
 
       Assert.NotNull(post);
     }
@@ -78,7 +78,7 @@ namespace DynamicHttpClient.Tests
     [Fact]
     public async Task CreatePostAsync_succeeds()
     {
-      var post = await client.CreatePostAsync(new Post
+      var post = await Client.CreatePostAsync(new Post
       {
         Title = "Test",
         Body  = "Test test test"
@@ -90,7 +90,7 @@ namespace DynamicHttpClient.Tests
     [Fact]
     public async Task DeletePostAsync_succeeds()
     {
-      await client.DeletePostAsync(66);
+      await Client.DeletePostAsync(66);
     }
 
     [Serializer(typeof(NewtonsoftSerializer))]

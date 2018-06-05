@@ -11,6 +11,5 @@ namespace DynamicHttpClient.IO
     public string                      Url      { get; set; }
     public HttpMethod                  Method   { get; set; }
     public IRequestBody                Body     { get; set; }
-    public TimeSpan?                   Timeout  { get; set; }
   }
 }

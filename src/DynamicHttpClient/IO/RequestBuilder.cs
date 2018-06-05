@@ -10,7 +10,6 @@ namespace DynamicHttpClient.IO
     public string                      Path     { get; set; }
     public HttpMethod                  Method   { get; set; }
     public IRequestBody                Body     { get; set; }
-    public TimeSpan?                   Timeout  { get; set; }
     public IDictionary<string, string> Headers  { get; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
     public IDictionary<string, string> Segments { get; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
@@ -32,8 +31,6 @@ namespace DynamicHttpClient.IO
       {
         request.Segments.Add(segment);
       }
-
-      request.Timeout = Timeout;
 
       return request;
     }

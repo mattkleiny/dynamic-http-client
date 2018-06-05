@@ -17,17 +17,17 @@ namespace DynamicHttpClient.Metadata
 
       if (!type.IsInterface)
       {
-        throw new InvalidMetadataException("The given type " + type + " must be an interface.");
+        throw new InvalidMetadataException($"The given type {type} must be an interface.");
       }
 
       if (type.GetCustomAttribute<SerializerAttribute>() == null)
       {
-        throw new InvalidMetadataException("The given type " + type + " must specify a ISerializer via the [Serializer] attribute.");
+        throw new InvalidMetadataException($"The given type {type} must specify a ISerializer via the [Serializer] attribute.");
       }
 
       if (type.GetCustomAttribute<DeserializerAttribute>() == null)
       {
-        throw new InvalidMetadataException("The given type " + type + " must specify a IDeserializer via the [Deserializer] attribute.");
+        throw new InvalidMetadataException($"The given type {type} must specify a IDeserializer via the [Deserializer] attribute.");
       }
 
       foreach (var method in type.GetMethods())
@@ -44,12 +44,12 @@ namespace DynamicHttpClient.Metadata
 
       if (methodAttribute == null)
       {
-        throw new InvalidMetadataException("A MethodAttribute must be specified for " + method.Name);
+        throw new InvalidMetadataException($"A MethodAttribute must be specified for {method.Name}");
       }
 
       if (method.GetParameters().SelectMany(p => p.GetCustomAttributes<BodyAttribute>()).Count() > 1)
       {
-        throw new InvalidMetadataException("Only a single [BodyAttribute] per method may be specified for " + method.Name);
+        throw new InvalidMetadataException($"Only a single [BodyAttribute] per method may be specified for {method.Name}");
       }
     }
 

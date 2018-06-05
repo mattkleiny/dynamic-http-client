@@ -14,7 +14,7 @@ namespace DynamicHttpClient.Tests.Metadata
     [Fact]
     public void Serializer_and_deserializer_are_extracted_ok()
     {
-      var method   = typeof(ITestInterface).GetMethod("WithPathAndMethod");
+      var method   = typeof(ITestInterface).GetMethod(nameof(ITestInterface.WithPathAndMethod));
       var metadata = MetadataFactory.CreateMetadata(method);
 
       Assert.NotNull(metadata.Serializer);
@@ -24,7 +24,7 @@ namespace DynamicHttpClient.Tests.Metadata
     [Fact]
     public void Body_metadata_is_extracted_ok()
     {
-      var method   = typeof(ITestInterface).GetMethod("WithBody");
+      var method   = typeof(ITestInterface).GetMethod(nameof(ITestInterface.WithBody));
       var metadata = MetadataFactory.CreateMetadata(method);
 
       Assert.NotNull(metadata.Body);
@@ -33,7 +33,7 @@ namespace DynamicHttpClient.Tests.Metadata
     [Fact]
     public void Url_segments_are_extracted_ok()
     {
-      var method   = typeof(ITestInterface).GetMethod("WithParameters");
+      var method   = typeof(ITestInterface).GetMethod(nameof(ITestInterface.WithParameters));
       var metadata = MetadataFactory.CreateMetadata(method);
 
       Assert.NotEmpty(metadata.UrlSegments);
@@ -42,7 +42,7 @@ namespace DynamicHttpClient.Tests.Metadata
     [Fact]
     public void Caching_policy_is_extracted_ok()
     {
-      var method   = typeof(ITestInterface).GetMethod("WithCachingPolicy");
+      var method   = typeof(ITestInterface).GetMethod(nameof(ITestInterface.WithCachingPolicy));
       var metadata = MetadataFactory.CreateMetadata(method);
 
       Assert.NotNull(metadata.CachingPolicy);
@@ -53,7 +53,7 @@ namespace DynamicHttpClient.Tests.Metadata
     {
       Assert.Throws<InvalidMetadataException>(() =>
       {
-        var method = typeof(ITestInterface).GetMethod("MissingMethodAttribute");
+        var method = typeof(ITestInterface).GetMethod(nameof(ITestInterface.MissingMethodAttribute));
         return MetadataFactory.CreateMetadata(method);
       });
     }
@@ -61,7 +61,7 @@ namespace DynamicHttpClient.Tests.Metadata
     [Fact]
     public void GetReturnType_supports_generic_task_objects()
     {
-      var method     = typeof(ITestInterface).GetMethod("WithTaskResult");
+      var method     = typeof(ITestInterface).GetMethod(nameof(ITestInterface.WithTaskResult));
       var returnType = MetadataFactory.GetReturnType(method);
 
       Assert.True(typeof(string).IsAssignableFrom(returnType));
@@ -70,7 +70,7 @@ namespace DynamicHttpClient.Tests.Metadata
     [Fact]
     public void Get_return_type_supports_plain_objects()
     {
-      var method     = typeof(ITestInterface).GetMethod("WithPlainResult");
+      var method     = typeof(ITestInterface).GetMethod(nameof(ITestInterface.WithPlainResult));
       var returnType = MetadataFactory.GetReturnType(method);
 
       Assert.True(typeof(string).IsAssignableFrom(returnType));
@@ -91,7 +91,7 @@ namespace DynamicHttpClient.Tests.Metadata
     [Fact]
     public void Inspect_method_complains_about_lack_of_method_metadata()
     {
-      Assert.Throws<InvalidMetadataException>(() => MetadataFactory.InspectMethod(typeof(ITestInterface).GetMethod("MissingMethodAttribute")));
+      Assert.Throws<InvalidMetadataException>(() => MetadataFactory.InspectMethod(typeof(ITestInterface).GetMethod(nameof(ITestInterface.MissingMethodAttribute))));
     }
 
     private interface ITestClientWithoutSerializer

@@ -19,6 +19,7 @@ namespace DynamicHttpClient
     private ICache           responseCache;
 
     public static TClient Create<TClient>(IRequestExecutor executor, ICache cache)
+      where TClient : class
     {
       Check.NotNull(executor, nameof(executor));
       Check.NotNull(cache,    nameof(cache));
@@ -81,11 +82,6 @@ namespace DynamicHttpClient
 
       builder.Path   = metadata.Path;
       builder.Method = metadata.Method;
-
-      if (metadata.Timeout.HasValue)
-      {
-        builder.Timeout = metadata.Timeout.Value;
-      }
 
       foreach (var header in metadata.Headers)
       {

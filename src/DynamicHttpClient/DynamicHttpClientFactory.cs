@@ -10,6 +10,7 @@ namespace DynamicHttpClient
     public ICache           Cache    { get; set; } = new NullCache();
 
     public TClient Build<TClient>()
+      where TClient : class
     {
       Check.NotNull(Executor, nameof(Executor));
       Check.NotNull(Cache,    nameof(Cache));

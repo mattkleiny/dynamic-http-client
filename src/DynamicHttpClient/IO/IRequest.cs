@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net.Http;
+﻿using System.Net.Http;
 
 namespace DynamicHttpClient.IO
 {
@@ -8,6 +7,5 @@ namespace DynamicHttpClient.IO
     string       Url     { get; }
     HttpMethod   Method  { get; }
     IRequestBody Body    { get; }
-    TimeSpan?    Timeout { get; }
   }
 }

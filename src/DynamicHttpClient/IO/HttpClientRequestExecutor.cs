@@ -55,26 +55,23 @@ namespace DynamicHttpClient.IO
       return new RequestBuilder<HttpClientRequest>();
     }
 
-    public Task<IResponse> ExecuteRequestAsync(IRequest original)
+    public async Task<IResponse> ExecuteRequestAsync(IRequest original)
     {
       Check.That(original is HttpClientRequest, "A request created with this executor was expected.");
 
       var request = (HttpClientRequest) original;
       var message = request.BuildMessage();
 
-      return client.SendAsync(message).ContinueWith<IResponse>(task =>
+      var response = await client.SendAsync(message);
+
+      if (!response.IsSuccessStatusCode)
       {
-        var result = task.Result;
-        try
-        {
-          result.EnsureSuccessStatusCode();
-          return new HttpClientResponse(result);
-        }
-        catch (HttpRequestException e)
-        {
-          throw new RequestException("An error occurred whilst executing a request.", result.StatusCode, e);
-        }
-      });
+        throw new HttpRequestException("An error occurred whilst executing a request.", response.StatusCode);
+      }
+
+      var rawBytes = await response.Content.ReadAsByteArrayAsync();
+
+      return new HttpClientResponse(response, rawBytes);
     }
 
     [DebuggerDisplay("{Method} {Url}")]
@@ -96,11 +93,6 @@ namespace DynamicHttpClient.IO
           message.Content = new StringContent(Body.Content, Encoding.UTF8, Body.ContentType);
         }
 
-        if (Timeout.HasValue)
-        {
-          throw new NotSupportedException("HttpClientRequestExecutor currently doesn't support per-request timeouts.");
-        }
-
         return message;
       }
     }
@@ -108,15 +100,15 @@ namespace DynamicHttpClient.IO
     [DebuggerDisplay("{Url} {StatusCode} {ContentLength}")]
     private sealed class HttpClientResponse : IResponse
     {
-      private readonly Lazy<string>        content;
       private readonly HttpResponseMessage message;
+      private readonly Lazy<string>        content;
 
-      public HttpClientResponse(HttpResponseMessage message)
+      public HttpClientResponse(HttpResponseMessage message, byte[] rawBytes)
       {
         this.message = message;
         content      = new Lazy<string>(() => ContentEncoding.GetString(RawBytes));
 
-        RawBytes = message.Content.ReadAsByteArrayAsync().Result;
+        RawBytes = rawBytes;
       }
 
       public byte[] RawBytes { get; }
