@@ -16,6 +16,10 @@ namespace DynamicHttpClient.IO
       return Task.FromResult<IResponse>(new NullResponse(request.Url));
     }
 
+    public void Dispose()
+    {
+    }
+
     private sealed class NullRequest : AbstractRequest
     {
     }

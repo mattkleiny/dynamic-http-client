@@ -33,5 +33,10 @@ namespace DynamicHttpClient.IO.Authentication
 
       return executor.ExecuteRequestAsync(request);
     }
+
+    public void Dispose()
+    {
+      executor.Dispose();
+    }
   }
 }

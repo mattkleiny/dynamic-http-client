@@ -73,6 +73,11 @@ namespace DynamicHttpClient.IO
 
       return new HttpClientResponse(response, rawBytes);
     }
+    
+    public void Dispose()
+    {
+      client.Dispose();
+    }
 
     [DebuggerDisplay("{Method} {Url}")]
     private sealed class HttpClientRequest : AbstractRequest, ICacheKeyProvider

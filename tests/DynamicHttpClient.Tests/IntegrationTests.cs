@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Runtime.Caching;
 using System.Runtime.Serialization;
@@ -13,20 +14,17 @@ using Xunit;
 
 namespace DynamicHttpClient.Tests
 {
-  public class IntegrationTests
+  public class IntegrationTests : IDisposable
   {
-    private static readonly DynamicHttpClientFactory Factory = new DynamicHttpClientFactory
-    {
-      Cache    = new ObjectCacheAdapter(new MemoryCache("REST Cache")),
-      Executor = new HttpClientRequestExecutor("http://jsonplaceholder.typicode.com/")
-    };
-
-    private static readonly ITestClient Client = Factory.Build<ITestClient>();
+    private readonly ITestClient client = DynamicHttpClientFactory.Build<ITestClient>(
+      new HttpClientRequestExecutor("http://jsonplaceholder.typicode.com/"),
+      new ObjectCacheAdapter(new MemoryCache("REST Cache"))
+    );
 
     [Fact]
     public void GetPosts_succeeds()
     {
-      var posts = Client.GetPosts();
+      var posts = client.GetPosts();
 
       Assert.NotNull(posts);
       Assert.True(posts.Any());
@@ -35,7 +33,7 @@ namespace DynamicHttpClient.Tests
     [Fact]
     public void GetPost_succeeds()
     {
-      var post = Client.GetPost(1);
+      var post = client.GetPost(1);
 
       Assert.NotNull(post);
     }
@@ -43,7 +41,7 @@ namespace DynamicHttpClient.Tests
     [Fact]
     public void CreatePost_succeeds()
     {
-      var post = Client.CreatePost(new Post
+      var post = client.CreatePost(new Post
       {
         Title = "Test",
         Body  = "Test test test"
@@ -55,13 +53,13 @@ namespace DynamicHttpClient.Tests
     [Fact]
     public void DeletePost_succeeds()
     {
-      Client.DeletePost(66);
+      client.DeletePost(66);
     }
 
     [Fact]
     public async Task GetPostsAsync_succeeds()
     {
-      var posts = await Client.GetPostsAsync();
+      var posts = await client.GetPostsAsync();
 
       Assert.NotNull(posts);
       Assert.True(posts.Any());
@@ -70,7 +68,7 @@ namespace DynamicHttpClient.Tests
     [Fact]
     public async Task GetPostAsync_succeeds()
     {
-      var post = await Client.GetPostAsync(1);
+      var post = await client.GetPostAsync(1);
 
       Assert.NotNull(post);
     }
@@ -78,7 +76,7 @@ namespace DynamicHttpClient.Tests
     [Fact]
     public async Task CreatePostAsync_succeeds()
     {
-      var post = await Client.CreatePostAsync(new Post
+      var post = await client.CreatePostAsync(new Post
       {
         Title = "Test",
         Body  = "Test test test"
@@ -90,14 +88,19 @@ namespace DynamicHttpClient.Tests
     [Fact]
     public async Task DeletePostAsync_succeeds()
     {
-      await Client.DeletePostAsync(66);
+      await client.DeletePostAsync(66);
+    }
+
+    public void Dispose()
+    {
+      client.Dispose();
     }
 
     [Serializer(typeof(NewtonsoftSerializer))]
     [Deserializer(typeof(NewtonsoftDeserializer))]
     [Version(1, 0, 0)]
     [Header("Disposition", "Friendly, thanks for sharing!")]
-    public interface ITestClient
+    public interface ITestClient : IDisposable
     {
       [Get("/posts")]
       [RelativeCache(60, TimeScale.Seconds, Representation = CachedRepresentation.Gzip)]

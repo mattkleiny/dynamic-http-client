@@ -4,20 +4,23 @@ using DynamicHttpClient.Metadata;
 
 namespace DynamicHttpClient
 {
-  public sealed class DynamicHttpClientFactory
+  public static class DynamicHttpClientFactory
   {
-    public IRequestExecutor Executor { get; set; } = new NullRequestExecutor();
-    public ICache           Cache    { get; set; } = new NullCache();
-
-    public TClient Build<TClient>()
+    public static TClient Build<TClient>(IRequestExecutor executor)
       where TClient : class
     {
-      Check.NotNull(Executor, nameof(Executor));
-      Check.NotNull(Cache,    nameof(Cache));
+      return Build<TClient>(executor, new NullCache());
+    }
+
+    public static TClient Build<TClient>(IRequestExecutor executor, ICache cache)
+      where TClient : class
+    {
+      Check.NotNull(executor, nameof(executor));
+      Check.NotNull(cache,    nameof(cache));
 
       MetadataFactory.InspectType(typeof(TClient));
 
-      return DynamicHttpClientProxy.Create<TClient>(Executor, Cache);
+      return DynamicHttpClientProxy.Create<TClient>(executor, cache);
     }
   }
 }

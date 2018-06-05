@@ -57,6 +57,13 @@ namespace DynamicHttpClient
         return completionSource.Task;
       }
 
+      // dispose of the executor, if requested
+      if (method.Name == nameof(IDisposable.Dispose))
+      {
+        Dispose();
+        return null;
+      }
+      
       // extract metadata from cache or reflection
       var metadata = metadataCache.GetOrAdd(method, MetadataFactory.CreateMetadata);
 
@@ -120,6 +127,11 @@ namespace DynamicHttpClient
       }
 
       return await executor.ExecuteRequestAsync(request);
+    }
+
+    public void Dispose()
+    {
+      executor.Dispose();
     }
 
     private static object ExtractResult(IResponse response, RequestMetadata metadata)
