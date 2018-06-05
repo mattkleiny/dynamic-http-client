@@ -28,6 +28,13 @@ namespace DynamicHttpClient.IO
       }
     }
 
+    public HttpClientRequestExecutor(HttpClient client)
+    {
+      Check.NotNull(client, nameof(client));
+
+      this.client = client;
+    }
+
     public HttpRequestHeaders DefaultRequestHeaders => client.DefaultRequestHeaders;
     public Uri                BaseAddress           => client.BaseAddress;
 
@@ -46,13 +53,6 @@ namespace DynamicHttpClient.IO
     public IRequestBuilder PrepareRequest()
     {
       return new RequestBuilder<HttpClientRequest>();
-    }
-
-    public IResponse ExecuteRequest(IRequest request)
-    {
-      Check.That(request is HttpClientRequest, "A request created with this executor was expected.");
-
-      return ExecuteRequestAsync(request).Result;
     }
 
     public Task<IResponse> ExecuteRequestAsync(IRequest original)

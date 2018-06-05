@@ -25,15 +25,6 @@ namespace DynamicHttpClient.IO.Authentication
       return builder;
     }
 
-    public IResponse ExecuteRequest(IRequest request)
-    {
-      Check.NotNull(request, nameof(request));
-
-      policy.AttachAuthentication(request);
-
-      return executor.ExecuteRequest(request);
-    }
-
     public Task<IResponse> ExecuteRequestAsync(IRequest request)
     {
       Check.NotNull(request, nameof(request));

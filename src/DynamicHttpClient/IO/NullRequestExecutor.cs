@@ -11,16 +11,9 @@ namespace DynamicHttpClient.IO
       return new RequestBuilder<NullRequest>();
     }
 
-    public IResponse ExecuteRequest(IRequest request)
-    {
-      Check.NotNull(request, nameof(request));
-
-      return new NullResponse(request.Url);
-    }
-
     public Task<IResponse> ExecuteRequestAsync(IRequest request)
     {
-      return Task.FromResult(ExecuteRequest(request));
+      return Task.FromResult<IResponse>(new NullResponse(request.Url));
     }
 
     private sealed class NullRequest : AbstractRequest
