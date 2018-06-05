@@ -29,13 +29,13 @@ namespace DynamicHttpClient.IO.Caching
 
     private abstract class CacheableResponse : IResponse
     {
-      public virtual long           ContentLength   => throw new NotSupportedException("The content length is not stored in this cacheable form of IResponse.");
-      public virtual byte[]         RawBytes        => throw new NotSupportedException("The raw bytes are not stored in this cacheable form of IResponse.");
-      public virtual string         Content         => throw new NotSupportedException("The content is not stored in this cacheable form of IResponse.");
-      public virtual string         ContentType     => throw new NotSupportedException("The content type is not stored in this cacheable form of IResponse.");
-      public virtual Encoding       ContentEncoding => throw new NotSupportedException("The content encoding is not stored in this cacheable form of IResponse.");
-      public virtual string         Url             => throw new NotSupportedException("The url is not stored in this cacheable form of IResponse.");
-      public virtual HttpStatusCode StatusCode      => throw new NotSupportedException("The status code is not stored in this cacheable form of IResponse.");
+      public virtual long           ContentLength   => throw new NotSupportedException($"The {nameof(ContentLength)} is not stored in this cached form of IResponse.");
+      public virtual byte[]         RawBytes        => throw new NotSupportedException($"The {nameof(RawBytes)} are not stored in this cached form of IResponse.");
+      public virtual string         Content         => throw new NotSupportedException($"The {nameof(Content)} is not stored in this cached form of IResponse.");
+      public virtual string         ContentType     => throw new NotSupportedException($"The {nameof(ContentType)} is not stored in this cached form of IResponse.");
+      public virtual Encoding       ContentEncoding => throw new NotSupportedException($"The {nameof(ContentEncoding)} is not stored in this cached form of IResponse.");
+      public virtual string         Url             => throw new NotSupportedException($"The {nameof(Url)} is not stored in this cached form of IResponse.");
+      public virtual HttpStatusCode StatusCode      => throw new NotSupportedException($"The {nameof(StatusCode)} is not stored in this cached form of IResponse.");
     }
 
     private sealed class CompressedCacheableResponse : CacheableResponse
@@ -49,10 +49,11 @@ namespace DynamicHttpClient.IO.Caching
 
         this.compressor = compressor;
 
-        StatusCode      = response.StatusCode;
         ContentType     = response.ContentType;
         ContentLength   = response.ContentLength;
         ContentEncoding = response.ContentEncoding;
+        Url             = response.Url;
+        StatusCode      = response.StatusCode;
 
         CompressedBytes = compressor.Compress(response.RawBytes);
       }
@@ -63,6 +64,7 @@ namespace DynamicHttpClient.IO.Caching
       public override string         ContentType     { get; }
       public override long           ContentLength   { get; }
       public override Encoding       ContentEncoding { get; }
+      public override string         Url             { get; }
       public override HttpStatusCode StatusCode      { get; }
     }
   }

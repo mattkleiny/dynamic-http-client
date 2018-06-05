@@ -95,6 +95,7 @@ namespace DynamicHttpClient.Tests
 
     [Serializer(typeof(NewtonsoftSerializer))]
     [Deserializer(typeof(NewtonsoftDeserializer))]
+    [Version(1, 0, 0)]
     [Header("Disposition", "Friendly, thanks for sharing!")]
     public interface ITestClient
     {

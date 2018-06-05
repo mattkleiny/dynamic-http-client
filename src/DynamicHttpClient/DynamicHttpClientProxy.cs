@@ -39,11 +39,11 @@ namespace DynamicHttpClient
         var completionSourceType = typeof(TaskCompletionSource<>).MakeGenericType(resultType);
         var completionSource     = (dynamic) Activator.CreateInstance(completionSourceType);
 
-        task.ContinueWith(antecendent =>
+        task.ContinueWith(previous =>
         {
           try
           {
-            dynamic result = antecendent.Result;
+            dynamic result = previous.Result;
 
             completionSource.SetResult(result);
           }
@@ -61,13 +61,13 @@ namespace DynamicHttpClient
 
       if (metadata.IsAsynchronous)
       {
-        return CastTask(InvokeInnerAsync(metadata, args), metadata.ResultType);
+        return CastTask(ExecuteAsync(metadata, args), metadata.ResultType);
       }
 
-      return InvokeInnerAsync(metadata, args).Result;
+      return ExecuteAsync(metadata, args).Result;
     }
 
-    private async Task<object> InvokeInnerAsync(RequestMetadata metadata, IReadOnlyList<object> args)
+    private async Task<object> ExecuteAsync(RequestMetadata metadata, IReadOnlyList<object> args)
     {
       var request  = BuildRequestFromMetadata(metadata, args);
       var response = await ExecuteRequestAsync(request, metadata);
