@@ -4,6 +4,7 @@ using DynamicHttpClient.Metadata;
 
 namespace DynamicHttpClient.Attributes.Methods
 {
+  /// <summary>Denotes the associated method is an HTTP call.</summary>
   public abstract class MethodAttribute : Attribute, IMetadataAware
   {
     private readonly HttpMethod method;

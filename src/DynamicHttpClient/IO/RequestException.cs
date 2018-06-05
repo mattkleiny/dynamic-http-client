@@ -5,21 +5,21 @@ using System.Runtime.Serialization;
 namespace DynamicHttpClient.IO
 {
   [Serializable]
-  public class RequestExecutorException : Exception
+  public class RequestException : Exception
   {
-    public RequestExecutorException(string message, HttpStatusCode statusCode)
+    public RequestException(string message, HttpStatusCode statusCode)
       : base(message)
     {
       StatusCode = statusCode;
     }
 
-    public RequestExecutorException(string message, HttpStatusCode statusCode, Exception exception)
+    public RequestException(string message, HttpStatusCode statusCode, Exception exception)
       : base(message, exception)
     {
       StatusCode = statusCode;
     }
 
-    protected RequestExecutorException(SerializationInfo info, StreamingContext context)
+    protected RequestException(SerializationInfo info, StreamingContext context)
       : base(info, context)
     {
       StatusCode = (HttpStatusCode) info.GetValue("StatusCode", typeof(HttpStatusCode));

@@ -3,6 +3,7 @@ using DynamicHttpClient.Metadata;
 
 namespace DynamicHttpClient.Attributes
 {
+  /// <summary>Attaches a <see cref="Version"/> to an HTTP client.</summary>
   public sealed class VersionAttribute : Attribute, IMetadataAware
   {
     private readonly Version version;

@@ -72,7 +72,7 @@ namespace DynamicHttpClient.IO
         }
         catch (HttpRequestException e)
         {
-          throw new RequestExecutorException("An error occurred whilst executing a request.", result.StatusCode, e);
+          throw new RequestException("An error occurred whilst executing a request.", result.StatusCode, e);
         }
       });
     }

@@ -4,6 +4,7 @@ using DynamicHttpClient.Metadata;
 
 namespace DynamicHttpClient.Caching
 {
+  /// <summary>Denotes the associated HTTP invocation should be cached, and how it should be cached.</summary>
   [AttributeUsage(AttributeTargets.Method)]
   public abstract class CachingAttribute : Attribute, IMetadataAware
   {

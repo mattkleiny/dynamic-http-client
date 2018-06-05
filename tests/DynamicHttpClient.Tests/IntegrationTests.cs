@@ -99,7 +99,7 @@ namespace DynamicHttpClient.Tests
     public interface ITestClient
     {
       [Get("/posts")]
-      [RelativeCache(60, TimeScale.Seconds, Representation = CachedRepresentation.Gzipped)]
+      [RelativeCache(60, TimeScale.Seconds, Representation = CachedRepresentation.Gzip)]
       Post[] GetPosts();
 
       [Get("/posts/{id}")]

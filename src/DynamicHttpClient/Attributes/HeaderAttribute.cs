@@ -3,6 +3,7 @@ using DynamicHttpClient.Metadata;
 
 namespace DynamicHttpClient.Attributes
 {
+  /// <summary>Attaches a static HTTP header to an HTTP request.</summary>
   [AttributeUsage(AttributeTargets.Interface | AttributeTargets.Method)]
   public sealed class HeaderAttribute : Attribute, IMetadataAware
   {

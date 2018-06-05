@@ -2,10 +2,9 @@
 
 namespace DynamicHttpClient.Caching
 {
-  public sealed class CacheSettings
+  /// <summary>Contains settings for an HTTP invocation.</summary>
+  public struct CacheSettings
   {
-    public static readonly CacheSettings Default = new CacheSettings();
-
     private DateTimeOffset? expirationTime;
     private TimeSpan?       slidingExpiration;
 

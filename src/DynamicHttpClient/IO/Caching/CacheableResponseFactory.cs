@@ -16,7 +16,7 @@ namespace DynamicHttpClient.IO.Caching
         case CachedRepresentation.Full:
           return response;
 
-        case CachedRepresentation.Gzipped:
+        case CachedRepresentation.Gzip:
           return new CompressedCacheableResponse(response, new GzipCompressor());
 
         case CachedRepresentation.Deflate:
@@ -27,7 +27,7 @@ namespace DynamicHttpClient.IO.Caching
       }
     }
 
-    internal abstract class CacheableResponse : IResponse
+    private abstract class CacheableResponse : IResponse
     {
       public virtual long           ContentLength   => throw new NotSupportedException("The content length is not stored in this cacheable form of IResponse.");
       public virtual byte[]         RawBytes        => throw new NotSupportedException("The raw bytes are not stored in this cacheable form of IResponse.");
@@ -38,10 +38,9 @@ namespace DynamicHttpClient.IO.Caching
       public virtual HttpStatusCode StatusCode      => throw new NotSupportedException("The status code is not stored in this cacheable form of IResponse.");
     }
 
-    internal sealed class CompressedCacheableResponse : CacheableResponse
+    private sealed class CompressedCacheableResponse : CacheableResponse
     {
       private readonly ICompressor compressor;
-      private readonly Encoding    contentEncoding;
 
       public CompressedCacheableResponse(IResponse response, ICompressor compressor)
       {
@@ -50,20 +49,20 @@ namespace DynamicHttpClient.IO.Caching
 
         this.compressor = compressor;
 
-        contentEncoding = response.ContentEncoding;
-
         StatusCode      = response.StatusCode;
         ContentType     = response.ContentType;
         ContentLength   = response.ContentLength;
+        ContentEncoding = response.ContentEncoding;
+
         CompressedBytes = compressor.Compress(response.RawBytes);
       }
 
       public          byte[]         CompressedBytes { get; }
       public override byte[]         RawBytes        => compressor.Decompress(CompressedBytes);
-      public override string         Content         => contentEncoding.GetString(RawBytes);
+      public override string         Content         => ContentEncoding.GetString(RawBytes);
       public override string         ContentType     { get; }
       public override long           ContentLength   { get; }
-      public override Encoding       ContentEncoding => contentEncoding;
+      public override Encoding       ContentEncoding { get; }
       public override HttpStatusCode StatusCode      { get; }
     }
   }

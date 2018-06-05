@@ -4,6 +4,7 @@ using DynamicHttpClient.Metadata;
 
 namespace DynamicHttpClient.Attributes
 {
+  /// <summary>Attaches a <see cref="IDeserializer"/> to an HTTP client.</summary>
   [AttributeUsage(AttributeTargets.Interface | AttributeTargets.Method)]
   public sealed class DeserializerAttribute : Attribute, IMetadataAware
   {

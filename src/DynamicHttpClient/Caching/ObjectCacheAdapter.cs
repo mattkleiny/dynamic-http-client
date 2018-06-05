@@ -6,6 +6,7 @@ using DynamicHttpClient.Utilities;
 
 namespace DynamicHttpClient.Caching
 {
+  /// <summary>An <see cref="ObjectCache"/> to <see cref="ICache"/> adapter.</summary>
   public sealed class ObjectCacheAdapter : ICache
   {
     private readonly ReaderWriterLockSlim cacheLock = new ReaderWriterLockSlim();

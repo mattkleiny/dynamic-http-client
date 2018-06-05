@@ -4,6 +4,7 @@ using DynamicHttpClient.Utilities;
 
 namespace DynamicHttpClient.Caching
 {
+  /// <summary>Denotes the associated HTTP invocation should be cached using a relative <see cref="IExpirationPolicy"/>.</summary>
   public sealed class RelativeCacheAttribute : CachingAttribute
   {
     private readonly TimeSpan interval;

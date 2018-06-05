@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
 namespace DynamicHttpClient.IO.Serialization
 {
@@ -7,12 +6,7 @@ namespace DynamicHttpClient.IO.Serialization
   {
     public static readonly JsonSerializerSettings Default = new JsonSerializerSettings
     {
-      TraceWriter = new DiagnosticsTraceWriter(),
-#if DEBUG
-      Formatting = Formatting.Indented,
-#else
-      Formatting = Formatting.None,
-#endif
+      Formatting             = Formatting.Indented,
       NullValueHandling      = NullValueHandling.Ignore,
       DefaultValueHandling   = DefaultValueHandling.Ignore,
       MissingMemberHandling  = MissingMemberHandling.Ignore,

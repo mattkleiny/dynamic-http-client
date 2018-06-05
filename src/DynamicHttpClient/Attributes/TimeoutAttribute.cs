@@ -4,6 +4,7 @@ using DynamicHttpClient.Utilities;
 
 namespace DynamicHttpClient.Attributes
 {
+  /// <summary>Attaches a fixed timeout to an HTTP client.</summary>
   public sealed class TimeoutAttribute : Attribute, IMetadataAware
   {
     private readonly TimeSpan timeout;
