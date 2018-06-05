@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Reflection;
 using System.Threading.Tasks;
 using DynamicHttpClient.Attributes;
+using DynamicHttpClient.Attributes.Methods;
 
 namespace DynamicHttpClient.Metadata
 {

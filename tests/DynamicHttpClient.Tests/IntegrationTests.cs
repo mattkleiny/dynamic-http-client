@@ -3,6 +3,7 @@ using System.Runtime.Caching;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using DynamicHttpClient.Attributes;
+using DynamicHttpClient.Attributes.Methods;
 using DynamicHttpClient.Caching;
 using DynamicHttpClient.IO;
 using DynamicHttpClient.IO.Caching;

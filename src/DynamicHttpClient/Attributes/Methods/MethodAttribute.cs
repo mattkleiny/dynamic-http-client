@@ -2,7 +2,7 @@
 using System.Net.Http;
 using DynamicHttpClient.Metadata;
 
-namespace DynamicHttpClient.Attributes
+namespace DynamicHttpClient.Attributes.Methods
 {
   public abstract class MethodAttribute : Attribute, IMetadataAware
   {

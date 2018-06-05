@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using DynamicHttpClient.Attributes;
+using DynamicHttpClient.Attributes.Methods;
 using DynamicHttpClient.Caching;
 using DynamicHttpClient.IO.Serialization;
 using DynamicHttpClient.Metadata;

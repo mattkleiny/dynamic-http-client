@@ -1,5 +1,3 @@
-using System;
-
 namespace DynamicHttpClient.Metadata
 {
   public interface IMetadataAware

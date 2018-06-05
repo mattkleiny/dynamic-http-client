@@ -1,7 +1,7 @@
 using System;
 using System.Net.Http;
 
-namespace DynamicHttpClient.Attributes
+namespace DynamicHttpClient.Attributes.Methods
 {
   [AttributeUsage(AttributeTargets.Method)]
   public sealed class HeadAttribute : MethodAttribute
