@@ -1,0 +1,7 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Description>A Dynamic HttpClient implementation based on strongly-typed interfaces.</Description>
+  </PropertyGroup>
+  <Import Project="../../Shared.props" />
+</Project>

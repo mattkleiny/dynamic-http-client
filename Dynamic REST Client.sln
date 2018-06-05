@@ -19,12 +19,24 @@ ProjectSection(SolutionItems) = preProject
 	tests\SharedTestCase.cs = tests\SharedTestCase.cs
 EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicHttpClient", "src\DynamicHttpClient\DynamicHttpClient.csproj", "{197FEC6E-8D91-4139-BBB1-9331000BCF09}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicHttpClient.Tests", "tests\DynamicHttpClient.Tests\DynamicHttpClient.Tests.csproj", "{AF01E573-078C-49E7-8539-FEFE4BCB9C57}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{197FEC6E-8D91-4139-BBB1-9331000BCF09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{197FEC6E-8D91-4139-BBB1-9331000BCF09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{197FEC6E-8D91-4139-BBB1-9331000BCF09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{197FEC6E-8D91-4139-BBB1-9331000BCF09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF01E573-078C-49E7-8539-FEFE4BCB9C57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF01E573-078C-49E7-8539-FEFE4BCB9C57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF01E573-078C-49E7-8539-FEFE4BCB9C57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF01E573-078C-49E7-8539-FEFE4BCB9C57}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
