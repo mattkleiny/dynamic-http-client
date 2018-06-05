@@ -2,9 +2,6 @@
 
 namespace DynamicHttpClient.Attributes
 {
-  /// <summary>
-  /// Associates a method parameter with a URI segment parameter.
-  /// </summary>
   [AttributeUsage(AttributeTargets.Parameter)]
   public sealed class SegmentAttribute : ParameterAttribute
   {

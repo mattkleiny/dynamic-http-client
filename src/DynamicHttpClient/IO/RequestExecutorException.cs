@@ -4,9 +4,6 @@ using System.Runtime.Serialization;
 
 namespace DynamicHttpClient.IO
 {
-  /// <summary>
-  /// Encapsulates an exception from a <see cref="IRequestExecutor"/>.
-  /// </summary>
   [Serializable]
   public class RequestExecutorException : Exception
   {

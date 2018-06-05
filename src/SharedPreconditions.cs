@@ -3,11 +3,6 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 
-/// <summary>Indicates the associated item is made more visible than necessary for testing purposes.</summary>
-internal sealed class VisibleForTestingAttribute : Attribute
-{
-}
-
 /// <summary>Static utilities for precondition checking.</summary>
 internal static class Check
 {

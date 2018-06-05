@@ -3,41 +3,22 @@ using DynamicHttpClient.Caching;
 
 namespace DynamicHttpClient.IO.Caching
 {
-  /// <summary>
-  /// A builder for <see cref="ICachingPolicy"/>s.
-  /// </summary>
   internal sealed class CachingPolicyBuilder
   {
-    /// <summary>
-    /// The desired <see cref="IExpirationPolicy"/>.
-    /// </summary>
-    public IExpirationPolicy ExpirationPolicy { get; set; }
-
-    /// <summary>
-    /// The desired <see cref="CachedRepresentation"/>.
-    /// </summary>
+    public IExpirationPolicy    ExpirationPolicy     { get; set; }
     public CachedRepresentation CachedRepresentation { get; set; }
 
-    /// <summary>
-    /// Builds the resultant <see cref="ICachingPolicy"/>.
-    /// </summary>
-    public ICachingPolicy Build()
-    {
-      return new CachingPolicy(ExpirationPolicy, CachedRepresentation);
-    }
+    public ICachingPolicy Build() => new CachingPolicy(ExpirationPolicy, CachedRepresentation);
 
-    /// <summary>
-    /// The <see cref="ICachingPolicy"/> implementation.
-    /// </summary>
     private sealed class CachingPolicy : ICachingPolicy
     {
       private readonly CachedRepresentation cachedRepresentation;
       private readonly IExpirationPolicy    expirationPolicy;
 
-      /// <param name="expirationPolicy">The desired <see cref="IExpirationPolicy"/>.</param>
-      /// <param name="cachedRepresentation">The desired <see cref="CachedRepresentation"/>.</param>
       public CachingPolicy(IExpirationPolicy expirationPolicy, CachedRepresentation cachedRepresentation)
       {
+        Check.NotNull(expirationPolicy, nameof(expirationPolicy));
+
         this.expirationPolicy     = expirationPolicy;
         this.cachedRepresentation = cachedRepresentation;
       }
@@ -46,9 +27,9 @@ namespace DynamicHttpClient.IO.Caching
       {
         Check.NotNull(request, nameof(request));
 
-        if (request is ICacheKeyProvider)
+        if (request is ICacheKeyProvider provider)
         {
-          return (request as ICacheKeyProvider).CacheKey;
+          return provider.CacheKey;
         }
 
         return request.Url;
@@ -58,7 +39,6 @@ namespace DynamicHttpClient.IO.Caching
       {
         Check.NotNull(response, nameof(response));
 
-        // don't cache items if they aren't found
         return response.StatusCode != HttpStatusCode.NotFound;
       }
 
@@ -66,20 +46,17 @@ namespace DynamicHttpClient.IO.Caching
       {
         Check.NotNull(response, nameof(response));
 
-        return CacheableResponseFactory.BuildCachedResponse(this.cachedRepresentation, response);
+        return CacheableResponseFactory.BuildCachedResponse(cachedRepresentation, response);
       }
 
       public CacheSettings GetCacheSettings(IRequest request)
       {
         Check.NotNull(request, nameof(request));
 
-        return this.expirationPolicy.BuildCacheSettings(request);
+        return expirationPolicy.BuildCacheSettings(request);
       }
 
-      public override string ToString()
-      {
-        return $"{this.expirationPolicy} represented as {this.cachedRepresentation}";
-      }
+      public override string ToString() => $"{expirationPolicy} represented as {cachedRepresentation}";
     }
   }
 }

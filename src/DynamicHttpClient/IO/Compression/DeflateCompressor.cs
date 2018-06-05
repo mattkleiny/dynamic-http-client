@@ -3,9 +3,6 @@ using System.IO.Compression;
 
 namespace DynamicHttpClient.IO.Compression
 {
-  /// <summary>
-  /// A <see cref="StreamingCompressor"/> specialization for Deflate.
-  /// </summary>
   public sealed class DeflateCompressor : StreamingCompressor
   {
     public DeflateCompressor()
@@ -17,14 +14,7 @@ namespace DynamicHttpClient.IO.Compression
     {
     }
 
-    protected override Stream CreateCompressStream(Stream stream)
-    {
-      return new DeflateStream(stream, CompressionMode.Compress);
-    }
-
-    protected override Stream CreateDecompressStream(Stream stream)
-    {
-      return new DeflateStream(stream, CompressionMode.Decompress);
-    }
+    protected override Stream CreateCompressStream(Stream stream)   => new DeflateStream(stream, CompressionMode.Compress);
+    protected override Stream CreateDecompressStream(Stream stream) => new DeflateStream(stream, CompressionMode.Decompress);
   }
 }

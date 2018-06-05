@@ -3,64 +3,77 @@ using System.Threading;
 
 namespace DynamicHttpClient.Utilities
 {
-  /// <summary>
-  /// Extension methods related to <see cref="ReaderWriterLockSlim"/>.
-  /// </summary>
   internal static class ThreadingExtensions
   {
-    /// <summary>
-    /// Creates a <see cref="IDisposable"/> scoped read-lock from the <see cref="ReaderWriterLockSlim"/>.
-    /// </summary>
-    public static IDisposable ScopedReadLock(this ReaderWriterLockSlim @lock)
+    public static ScopedReadLockToken ScopedReadLock(this ReaderWriterLockSlim target)
     {
-      Check.NotNull(@lock, nameof(@lock));
+      Check.NotNull(target, nameof(target));
 
-      @lock.EnterReadLock();
+      target.EnterReadLock();
 
-      return new AnonymousDisposable(@lock.ExitReadLock);
+      return new ScopedReadLockToken(target);
     }
 
-    /// <summary>
-    /// Creates a <see cref="IDisposable"/> scoped upgradeable read-lock from the <see cref="ReaderWriterLockSlim"/>.
-    /// </summary>
-    public static IDisposable ScopedUpgradeableReadLock(this ReaderWriterLockSlim @lock)
+    public static ScopedUpgradeableReadLockToken ScopedUpgradeableReadLock(this ReaderWriterLockSlim target)
     {
-      Check.NotNull(@lock, nameof(@lock));
+      Check.NotNull(target, nameof(target));
 
-      @lock.EnterUpgradeableReadLock();
+      target.EnterUpgradeableReadLock();
 
-      return new AnonymousDisposable(@lock.ExitUpgradeableReadLock);
+      return new ScopedUpgradeableReadLockToken(target);
     }
 
-    /// <summary>
-    /// Creates a <see cref="IDisposable"/> scoped write-lock from the <see cref="ReaderWriterLockSlim"/>.
-    /// </summary>
-    public static IDisposable ScopedWriteLock(this ReaderWriterLockSlim @lock)
+    public static ScopedWriteLockToken ScopedWriteLock(this ReaderWriterLockSlim target)
     {
-      Check.NotNull(@lock, nameof(@lock));
+      Check.NotNull(target, nameof(target));
 
-      @lock.EnterWriteLock();
+      target.EnterWriteLock();
 
-      return new AnonymousDisposable(@lock.ExitWriteLock);
+      return new ScopedWriteLockToken(target);
     }
 
-    /// <summary>
-    /// An anonymous, delegate-based <see cref="IDisposable"/> implementation.
-    /// </summary>
-    private sealed class AnonymousDisposable : IDisposable
+    public struct ScopedReadLockToken : IDisposable
     {
-      private readonly Action disposeDelegate;
+      private readonly ReaderWriterLockSlim target;
 
-      public AnonymousDisposable(Action disposeDelegate)
-      {
-        Check.NotNull(disposeDelegate, nameof(disposeDelegate));
-
-        this.disposeDelegate = disposeDelegate;
-      }
+      public ScopedReadLockToken(ReaderWriterLockSlim target) => this.target = target;
 
       public void Dispose()
       {
-        this.disposeDelegate();
+        if (target.IsReadLockHeld)
+        {
+          target.ExitReadLock();
+        }
+      }
+    }
+
+    public struct ScopedUpgradeableReadLockToken : IDisposable
+    {
+      private readonly ReaderWriterLockSlim target;
+
+      public ScopedUpgradeableReadLockToken(ReaderWriterLockSlim target) => this.target = target;
+
+      public void Dispose()
+      {
+        if (target.IsUpgradeableReadLockHeld)
+        {
+          target.ExitUpgradeableReadLock();
+        }
+      }
+    }
+
+    public struct ScopedWriteLockToken : IDisposable
+    {
+      private readonly ReaderWriterLockSlim target;
+
+      public ScopedWriteLockToken(ReaderWriterLockSlim target) => this.target = target;
+
+      public void Dispose()
+      {
+        if (target.IsWriteLockHeld)
+        {
+          target.ExitWriteLock();
+        }
       }
     }
   }

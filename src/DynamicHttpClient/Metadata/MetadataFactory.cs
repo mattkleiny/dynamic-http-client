@@ -1,21 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Reflection;
 using System.Threading.Tasks;
 using DynamicHttpClient.Attributes;
-using DynamicHttpClient.Attributes.Methods;
 
 namespace DynamicHttpClient.Metadata
 {
-  /// <summary>
-  /// Static factories related to metadata.
-  /// </summary>
   internal static class MetadataFactory
   {
-    /// <summary>
-    /// Inspects the given <see cref="Type"/> and looks for errors in the metadata.
-    /// </summary>
     public static void InspectType(Type type)
     {
       Check.NotNull(type, nameof(type));
@@ -41,9 +35,6 @@ namespace DynamicHttpClient.Metadata
       }
     }
 
-    /// <summary>
-    /// Inspects the given <see cref="MemberInfo"/> to ensure it matches the required contract.
-    /// </summary>
     public static void InspectMethod(MethodInfo method)
     {
       Check.NotNull(method, nameof(method));
@@ -61,10 +52,6 @@ namespace DynamicHttpClient.Metadata
       }
     }
 
-    /// <summary>
-    /// Builds <see cref="RequestMetadata"/> from the given <see cref="MethodInfo"/>.
-    /// </summary>
-    /// <exception cref="InvalidMetadataException">If the method metadata is invalid.</exception>
     public static RequestMetadata CreateMetadata(MethodInfo method)
     {
       Check.NotNull(method, nameof(method));
@@ -91,13 +78,8 @@ namespace DynamicHttpClient.Metadata
       return metadata;
     }
 
-    /// <summary>
-    /// Determines the return type for the given method.
-    /// </summary>
     internal static Type GetReturnType(MethodInfo method)
     {
-      Check.NotNull(method, nameof(method));
-
       if (typeof(Task).IsAssignableFrom(method.ReturnType))
       {
         if (method.ReturnType.GenericTypeArguments.Any())
@@ -109,9 +91,6 @@ namespace DynamicHttpClient.Metadata
       return method.ReturnType;
     }
 
-    /// <summary>
-    /// Populates the parameters on the <see cref="RequestMetadata"/> object.
-    /// </summary>
     private static void PopulateParameterInfo(MethodInfo method, RequestMetadata metadata)
     {
       var parameters       = method.GetParameters();
@@ -134,8 +113,7 @@ namespace DynamicHttpClient.Metadata
           }
 
           // body parameters are only valid for POST/PUT
-          if (metadata.Method != RestMethod.Post &&
-              metadata.Method != RestMethod.Put)
+          if (metadata.Method != HttpMethod.Post && metadata.Method != HttpMethod.Put)
           {
             throw new InvalidMetadataException("A body parameter was specified for a " + metadata.Method + " request: " + method.Name);
           }
@@ -173,13 +151,8 @@ namespace DynamicHttpClient.Metadata
       }
     }
 
-    /// <summary>
-    /// Finds the <see cref="IMetadataAware"/> for the given method.
-    /// </summary>
     private static IEnumerable<IMetadataAware> FindMetadataAwareAttributes(MethodBase method)
     {
-      Check.NotNull(method, nameof(method));
-
       foreach (var attribute in method.GetParameters().SelectMany(p => p.GetCustomAttributes()).OfType<IMetadataAware>())
       {
         yield return attribute;

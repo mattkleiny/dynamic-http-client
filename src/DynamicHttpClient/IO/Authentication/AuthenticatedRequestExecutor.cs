@@ -2,16 +2,11 @@
 
 namespace DynamicHttpClient.IO.Authentication
 {
-  /// <summary>
-  /// A <see cref="IRequestExecutor"/> decorator that supports a <see cref="IAuthenticationPolicy"/>.
-  /// </summary>
   public sealed class AuthenticatedRequestExecutor : IRequestExecutor
   {
     private readonly IRequestExecutor      executor;
     private readonly IAuthenticationPolicy policy;
 
-    /// <param name="executor">The inner <see cref="IRequestExecutor"/>.</param>
-    /// <param name="policy">The <see cref="IAuthenticationPolicy"/> to use.</param>
     public AuthenticatedRequestExecutor(IRequestExecutor executor, IAuthenticationPolicy policy)
     {
       Check.NotNull(executor, nameof(executor));
@@ -21,11 +16,11 @@ namespace DynamicHttpClient.IO.Authentication
       this.policy   = policy;
     }
 
-    public IRequestBuilder BuildRequest()
+    public IRequestBuilder PrepareRequest()
     {
-      var builder = this.executor.BuildRequest();
+      var builder = executor.PrepareRequest();
 
-      this.policy.AttachAuthentication(builder);
+      policy.AttachAuthentication(builder);
 
       return builder;
     }
@@ -34,18 +29,18 @@ namespace DynamicHttpClient.IO.Authentication
     {
       Check.NotNull(request, nameof(request));
 
-      this.policy.AttachAuthentication(request);
+      policy.AttachAuthentication(request);
 
-      return this.executor.ExecuteRequest(request);
+      return executor.ExecuteRequest(request);
     }
 
     public Task<IResponse> ExecuteRequestAsync(IRequest request)
     {
       Check.NotNull(request, nameof(request));
 
-      this.policy.AttachAuthentication(request);
+      policy.AttachAuthentication(request);
 
-      return this.executor.ExecuteRequestAsync(request);
+      return executor.ExecuteRequestAsync(request);
     }
   }
 }

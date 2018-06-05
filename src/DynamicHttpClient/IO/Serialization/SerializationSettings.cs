@@ -1,20 +1,17 @@
-﻿namespace DynamicHttpClient.IO.Serialization
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+
+namespace DynamicHttpClient.IO.Serialization
 {
-  /// <summary>
-  /// Common constants related to serialization.
-  /// </summary>
-  internal static class SerializationConstants
+  internal static class SerializationSettings
   {
-    /// <summary>
-    /// Default <see cref="JsonSerializerSettings"/> for Newtonsoft.
-    /// </summary>
-    public static readonly JsonSerializerSettings DefaultSerializerSettings = new JsonSerializerSettings
+    public static readonly JsonSerializerSettings Default = new JsonSerializerSettings
     {
       TraceWriter = new DiagnosticsTraceWriter(),
 #if DEBUG
       Formatting = Formatting.Indented,
 #else
-            Formatting = Formatting.None,
+      Formatting = Formatting.None,
 #endif
       NullValueHandling      = NullValueHandling.Ignore,
       DefaultValueHandling   = DefaultValueHandling.Ignore,

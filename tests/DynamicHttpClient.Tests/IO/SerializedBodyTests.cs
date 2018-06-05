@@ -1,11 +1,15 @@
-﻿using Xunit;
+﻿using AutoFixture;
+using DynamicHttpClient.IO;
+using DynamicHttpClient.IO.Serialization;
+using NSubstitute;
+using Xunit;
 
 namespace DynamicHttpClient.Tests.IO
 {
-  public class SerializedBodyTests : TestFixture
+  public class SerializedBodyTests : TestCase
   {
     [Fact]
-    public void Content_Delegates_To_Serialization_Mechanism()
+    public void Content_delegates_to_serialization_mechanism()
     {
       var serializer = Fixture.Create<ISerializer>();
       var target     = new object();

@@ -3,9 +3,6 @@ using DynamicHttpClient.Metadata;
 
 namespace DynamicHttpClient.Attributes
 {
-  /// <summary>
-  /// A <see cref="Attribute"/> which adds a fixed header value to requests.
-  /// </summary>
   [AttributeUsage(AttributeTargets.Interface | AttributeTargets.Method)]
   public sealed class HeaderAttribute : Attribute, IMetadataAware
   {
@@ -23,7 +20,7 @@ namespace DynamicHttpClient.Attributes
 
     public void OnAttachMetadata(RequestMetadata metadata)
     {
-      metadata.Headers.Add(this.key, this.value);
+      metadata.Headers.Add(key, value);
     }
   }
 }

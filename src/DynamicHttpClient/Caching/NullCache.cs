@@ -1,19 +1,15 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace DynamicHttpClient.Caching
 {
-  /// <summary>
-  /// A no-op <see cref="ICache"/> implementation.
-  /// </summary>
   public sealed class NullCache : ICache
   {
-    public T GetOrCompute<T>(string key, CacheSettings settings, Func<T> computeDelegate, Func<T, bool> shouldCachePredicate)
+    public Task<T> GetOrComputeAsync<T>(string key, CacheSettings settings, Func<Task<T>> computeDelegate, Func<T, bool> shouldCachePredicate)
     {
-      Check.NotNullOrEmpty(key, nameof(key));
-      Check.NotNull(computeDelegate,      nameof(computeDelegate));
-      Check.NotNull(shouldCachePredicate, nameof(shouldCachePredicate));
+      Check.NotNull(computeDelegate, nameof(computeDelegate));
 
-      return computeDelegate(); // always compute
+      return computeDelegate();
     }
   }
 }

@@ -4,9 +4,6 @@ using DynamicHttpClient.Utilities;
 
 namespace DynamicHttpClient.Caching
 {
-  /// <summary>
-  /// A <see cref="CachingAttribute"/> that describes a relative expiration policy.
-  /// </summary>
   public sealed class RelativeCacheAttribute : CachingAttribute
   {
     private readonly TimeSpan interval;
@@ -16,6 +13,6 @@ namespace DynamicHttpClient.Caching
       this.interval = TimeScaleHelpers.BuildTimeSpan(interval, scale);
     }
 
-    protected override IExpirationPolicy ExpirationPolicy => ExpirationPolicyFactory.BuildRelativeExpirationPolicy(this.interval);
+    protected override IExpirationPolicy ExpirationPolicy => ExpirationPolicyFactory.BuildRelativeExpirationPolicy(interval);
   }
 }

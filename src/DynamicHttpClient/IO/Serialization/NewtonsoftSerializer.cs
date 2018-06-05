@@ -1,15 +1,13 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace DynamicHttpClient.IO.Serialization
 {
-  /// <summary>
-  /// A <see cref="ISerializer"/> that uses Newtonsoft's JSON serializer.
-  /// </summary>
   public sealed class NewtonsoftSerializer : ISerializer
   {
-    private readonly JsonSerializer serializer = JsonSerializer.CreateDefault(SerializationConstants.DefaultSerializerSettings);
+    private readonly JsonSerializer serializer = JsonSerializer.CreateDefault(SerializationSettings.Default);
 
     public string ContentType => "application/json";
 
@@ -21,7 +19,7 @@ namespace DynamicHttpClient.IO.Serialization
 
       using (var writer = new StringWriter(builder))
       {
-        this.serializer.Serialize(writer, content, type);
+        serializer.Serialize(writer, content, type);
       }
 
       return builder.ToString();

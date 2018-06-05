@@ -3,20 +3,15 @@ using System.Linq;
 
 namespace DynamicHttpClient.IO.Authentication
 {
-  /// <summary>
-  /// A <see cref="IAuthenticationPolicy"/> that composes other <see cref="IAuthenticationPolicy"/>s.
-  /// </summary>
   public sealed class CompositeAuthenticationPolicy : IAuthenticationPolicy
   {
     private readonly IEnumerable<IAuthenticationPolicy> policies;
 
-    /// <param name="policies">The <see cref="IAuthenticationPolicy"/> to compose.</param>
     public CompositeAuthenticationPolicy(params IAuthenticationPolicy[] policies)
       : this(policies.ToList())
     {
     }
 
-    /// <param name="policies">The <see cref="IAuthenticationPolicy"/> to compose.</param>
     public CompositeAuthenticationPolicy(IEnumerable<IAuthenticationPolicy> policies)
     {
       Check.NotNull(policies, nameof(policies));
@@ -28,7 +23,7 @@ namespace DynamicHttpClient.IO.Authentication
     {
       Check.NotNull(builder, nameof(builder));
 
-      foreach (var policy in this.policies)
+      foreach (var policy in policies)
       {
         policy.AttachAuthentication(builder);
       }
@@ -38,7 +33,7 @@ namespace DynamicHttpClient.IO.Authentication
     {
       Check.NotNull(request, nameof(request));
 
-      foreach (var policy in this.policies)
+      foreach (var policy in policies)
       {
         policy.AttachAuthentication(request);
       }
